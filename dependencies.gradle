@@ -1,0 +1,55 @@
+ext {
+//Libs
+
+    rx2JavaVersion = "2.2.8"
+    rx2AndroidVersion = "2.1.0"
+    rxKotlin = "2.3.0"
+
+    rxlibs = [
+            rx2Java             : "io.reactivex.rxjava2:rxjava:$rx2JavaVersion",
+            rx2Android          : "io.reactivex.rxjava2:rxandroid:$rx2AndroidVersion",
+            rxKotlin            : "io.reactivex.rxjava2:rxkotlin:$rx2AndroidVersion",
+    ]
+
+    retrofitVersion = "2.5.0"
+    okHttpVersion = "3.14.1"
+    gsonVersion = "2.8.5"
+
+    glideLib = [
+            glide : "com.github.bumptech.glide:glide:4.11.0",
+            glideOkHttp : "com.github.bumptech.glide:okhttp3-integration:4.9.0"
+    ]
+
+    diLibs = [
+            koin : 'org.koin:koin-android-viewmodel:2.0.1'
+    ]
+
+    networklibs = [
+
+            reprofit            : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            reprofitGson        : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+            reprofitRx          : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
+
+            okhttp              : "com.squareup.okhttp3:okhttp:$okHttpVersion",
+            okhttpLogging       : "com.squareup.okhttp3:logging-interceptor:$okHttpVersion",
+            gson                : "com.google.code.gson:gson:$gsonVersion",
+
+    ]
+
+    database = [
+            roomRuntime : 'androidx.room:room-runtime:2.2.1',
+            legacy:  "androidx.legacy:legacy-support-v4:1.0.0"
+
+    ]
+
+    androidKaptLibs = [
+            roomCompiler : 'androidx.room:room-compiler:2.2.1',
+    ]
+
+    libs = [
+            cicerone : 'ru.terrakok.cicerone:cicerone:5.0.0',
+            timber : 'com.jakewharton.timber:timber:4.7.1'
+    ]
+
+
+}

@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nagivation_history"
+        android:icon="@drawable/baseline_history_black_24"
+        android:title="History" />
+    <item
+        android:id="@+id/nagivation_readBarcode"
+        android:icon="@drawable/baseline_camera_black_48"
+        android:title="Scan" />
+    <item
+        android:id="@+id/nagivation_createBarcode"
+        android:icon="@drawable/baseline_add_black_24"
+        android:title="Create" />
+</menu>
