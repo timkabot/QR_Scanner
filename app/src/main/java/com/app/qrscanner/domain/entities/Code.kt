@@ -6,6 +6,10 @@ import androidx.room.TypeConverters
 
 @Entity(tableName = "codes")
 data class Code(
-    @PrimaryKey val data: String,
+    @PrimaryKey(autoGenerate = true)
+    var uid: Int = 0,
+    val data: String,
     @TypeConverters(CodeType.Converter::class)
-    val type: CodeType)
+    val type: CodeType,
+    val qrCodePath: String = ""
+)

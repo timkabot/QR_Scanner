@@ -21,11 +21,13 @@ import com.app.qrscanner.utils.MY_CAMERA_REQUEST_CODE
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.Result
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_scan.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import org.koin.android.ext.android.inject
+import timber.log.Timber
 
 class ScanQrFragment : BaseFragment(), ZXingScannerView.ResultHandler {
     override val layoutRes = R.layout.fragment_scan
@@ -76,16 +78,19 @@ class ScanQrFragment : BaseFragment(), ZXingScannerView.ResultHandler {
         vibrator.vibrate(100)
     }
 
+    private fun saveCodeInDatabase(code: Code){
+        Thread {
+            codesRepository.insertCode(code)
+        }.also {
+            it.start()
+        }
+    }
+
     override fun handleResult(p0: Result?) {
         p0?.let {
             vibrate()
-            Toast.makeText(context,p0.text,Toast.LENGTH_LONG).show()
-            Completable.create {
-                codesRepository.insertCode(Code(data = p0.text, type = CodeType.SCANNED))
-            }.subscribeOn(Schedulers.io())
-                .subscribe {
-                    println(it)
-                }
+            Toast.makeText(context,"${p0.text}, type: ${p0.barcodeFormat}",Toast.LENGTH_LONG).show()
+            saveCodeInDatabase((Code(data = p0.text, type = CodeType.SCANNED)))
             resumeCamera()
         }
     }

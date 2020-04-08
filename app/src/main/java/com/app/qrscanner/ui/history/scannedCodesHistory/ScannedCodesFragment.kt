@@ -8,7 +8,10 @@ import com.app.qrscanner.data.CodesRepository
 import com.app.qrscanner.domain.entities.Code
 import com.app.qrscanner.ui.global.BaseFragment
 import com.app.qrscanner.ui.global.list.CodesAdapter
+import kotlinx.android.synthetic.main.fragment_history_created.*
 import kotlinx.android.synthetic.main.fragment_history_scanned.*
+import kotlinx.android.synthetic.main.fragment_history_scanned.emptyImage
+import kotlinx.android.synthetic.main.fragment_history_scanned.recycler
 import org.koin.android.ext.android.inject
 
 class ScannedCodesFragment : BaseFragment() {
@@ -16,32 +19,40 @@ class ScannedCodesFragment : BaseFragment() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var codesAdapter: CodesAdapter
 
-    val codesRepository by inject<CodesRepository>()
+    private val codesRepository by inject<CodesRepository>()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        initRecycler()
+        getData()
+    }
+
+    private fun initRecycler() {
         codesAdapter = CodesAdapter(arrayListOf())
         linearLayoutManager = LinearLayoutManager(context)
         recycler.layoutManager = linearLayoutManager
         recycler.adapter = codesAdapter
-        getData()
     }
 
     private fun getData() {
         codesRepository.getScannedCodes().observeForever {
-            if(it.isEmpty()){
-                emptyImage.visibility = View.VISIBLE
+            if(it.isEmpty()) {
+                emptyImage?.let { emptyImageView ->
+                    emptyImageView.visibility = View.VISIBLE
+                }
             }
             else {
-                emptyImage.visibility = View.GONE
-
-                codesAdapter.codes.clear()
-                it.reversed().forEach{ code ->
-                    codesAdapter.codes.add(code)
+                emptyImage?.let { emptyImageView ->
+                    emptyImageView.visibility = View.GONE
                 }
-                codesAdapter.notifyDataSetChanged()
+                updateAdapter(it)
             }
         }
     }
 
+    private fun updateAdapter(codes : List<Code>){
+        codesAdapter.codes.clear()
+        codesAdapter.codes.addAll(codes.reversed())
+        codesAdapter.notifyDataSetChanged()
+    }
 }

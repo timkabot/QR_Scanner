@@ -13,5 +13,4 @@ class CodesRepository(db: AppDatabase) {
 
     fun getCreatedCodes() = dao.getCodes(CodeType.CREATED.ordinal)
 
-
 }

@@ -48,10 +48,9 @@ class AppActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nagivation_history -> {
                     router.navigateTo(Screens.HistoryScreen)
-                    //router.navigateTo(Screens.SearchVisitsScreen)
                 }
                 R.id.nagivation_createBarcode -> {
-                    //router.navigateTo(Screens.ProfileVisitsScreen)
+                    router.navigateTo(Screens.CreateQRScreen)
                 }
                 R.id.nagivation_readBarcode -> {
                     router.navigateTo(Screens.ScanQRScreen)

@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">QRScanner</string>
     <string name="scan">Scan</string>
+    <string name="website">Website</string>
+    <string name="enter_or_paste_url_here_to_create_qr_code">Enter or paste URL here to create QR code</string>
+    <string name="paste">Paste</string>
     <string name="create">Create</string>
+    <string name="save">Save</string>
+    <string name="share">Share</string>
+    <string name="enter_the_filename_here">Enter the filename here</string>
 </resources>
