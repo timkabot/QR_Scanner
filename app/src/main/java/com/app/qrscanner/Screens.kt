@@ -1,12 +1,13 @@
 package com.app.qrscanner
 
 import androidx.fragment.app.Fragment
-import com.app.qrscanner.ui.createQr.CreateCodeFragment
-import com.app.qrscanner.ui.history.HistoryFragment
-import com.app.qrscanner.ui.history.createdCodesHistory.CreatedCodesHistory
-import com.app.qrscanner.ui.history.scannedCodesHistory.ScannedCodesFragment
-import com.app.qrscanner.ui.scanQr.ScanQrFragment
-import com.app.qrscanner.ui.showQr.ShowCodeFragment
+import com.app.qrscanner.presentation.createQr.CreateCodeFragment
+import com.app.qrscanner.presentation.history.HistoryFragment
+import com.app.qrscanner.presentation.history.createdCodesHistory.CreatedCodesHistory
+import com.app.qrscanner.presentation.history.scannedCodesHistory.ScannedCodesFragment
+import com.app.qrscanner.presentation.scanQr.ScanQrFragment
+import com.app.qrscanner.presentation.settings.SettingsFragment
+import com.app.qrscanner.presentation.showQr.ShowCodeFragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 object Screens {
@@ -31,5 +32,9 @@ object Screens {
 
     class ShowQRScreen(val value: String) : SupportAppScreen(){
         override fun getFragment() = ShowCodeFragment.create(value)
+    }
+
+    object SettingsScreen : SupportAppScreen(){
+        override fun getFragment() = SettingsFragment()
     }
 }
