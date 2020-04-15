@@ -9,7 +9,10 @@ data class Code(
     @PrimaryKey(autoGenerate = true)
     var uid: Int = 0,
     val data: String,
+    @TypeConverters(CodeStatus.Converter::class)
+    val status: CodeStatus,
+    val shortDescription: String = "",
+    val qrCodePath: String = "",
     @TypeConverters(CodeType.Converter::class)
-    val type: CodeType,
-    val qrCodePath: String = ""
+    val type: CodeType = CodeType.TEXT
 )

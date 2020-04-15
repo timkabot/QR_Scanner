@@ -6,14 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.app.qrscanner.domain.entities.Code
+import com.app.qrscanner.domain.entities.CodeStatus
 import com.app.qrscanner.domain.entities.CodeType
 
 
-@Database(entities = [Code::class], version = 2)
-@TypeConverters(CodeType.Converter::class)
+@Database(entities = [Code::class], version = 1)
+@TypeConverters(CodeType.Converter::class, CodeStatus.Converter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun codesDao(): CodesDao
-
     companion object {
         fun build(context: Context) = Room.databaseBuilder(
             context,

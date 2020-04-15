@@ -6,12 +6,11 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.app.qrscanner.domain.entities.Code
-import com.app.qrscanner.domain.entities.CodeType
 
 @Dao
 interface CodesDao {
 
-    @Query("SELECT * FROM codes WHERE type = :type")
+    @Query("SELECT * FROM codes WHERE status = :type")
     fun getCodes(type: Int) : LiveData<List<Code>>
 
     @Insert

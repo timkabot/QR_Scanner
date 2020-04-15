@@ -10,13 +10,14 @@
         android:layout_height="match_parent">
     </me.dm7.barcodescanner.zxing.ZXingScannerView>
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_flash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginEnd="75dp"
         android:layout_marginBottom="115dp"
-        app:icon="@drawable/baseline_flash_on_white_48" />
+        android:background="@drawable/baseline_flash_on_white_48" />
 
 </RelativeLayout>

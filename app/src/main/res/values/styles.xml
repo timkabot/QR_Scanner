@@ -5,7 +5,19 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:textViewStyle">@style/myTextView</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
+        <item name="fontFamily">@font/open_sans</item>
     </style>
-
+    <style name="myTextView">
+        <item name="android:textColor">@color/app_text</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="TabTheme">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
 </resources>

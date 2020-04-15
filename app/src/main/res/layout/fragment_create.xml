@@ -3,32 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey">
+    android:background="@color/background">
 
-    <ImageButton
-        android:id="@+id/adsButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:scaleType="fitXY"
-        android:background="#f5f6fa"
-        app:layout_constraintEnd_toStartOf="@+id/settingsButton"
-        app:layout_constraintTop_toTopOf="@+id/settingsButton"
-        android:layout_marginEnd="15dp"
-        app:srcCompat="@drawable/ads"
-        android:layout_marginRight="15dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/containerWhite"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/container_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settingsButton">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/webSiteTextView"
@@ -37,7 +26,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:text="@string/website"
+            android:text="@string/url"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,53 +37,47 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="15dp"
+            android:background="@null"
             android:hint="@string/enter_or_paste_url_here_to_create_qr_code"
-            app:layout_constraintEnd_toEndOf="parent"
             android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/webSiteTextView" />
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/pasteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="60dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/rounded_stroke_gradient_shape"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="-5dp"
             android:text="@string/paste"
             android:textColor="@color/colorPrimary"
-            android:backgroundTint="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/createCodeButton"
-            app:layout_constraintTop_toBottomOf="@+id/editText"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintStart_toStartOf="@+id/editText"
+            app:layout_constraintTop_toBottomOf="@+id/editText" />
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/createCodeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/rounded_gradient_shape"
+            android:elevation="20dp"
+            android:paddingHorizontal="24dp"
             android:text="@string/create"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="@+id/pasteButton"
             app:layout_constraintEnd_toEndOf="@+id/editText"
-            app:layout_constraintTop_toTopOf="@+id/pasteButton" />
+            app:layout_constraintTop_toTopOf="@+id/pasteButton"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ImageButton
-        android:id="@+id/settingsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
-        android:background="#f5f6fa"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baseline_settings_black_48" />
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

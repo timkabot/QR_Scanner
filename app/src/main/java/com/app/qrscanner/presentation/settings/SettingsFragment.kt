@@ -1,22 +1,58 @@
 package com.app.qrscanner.presentation.settings
 
+import android.graphics.LinearGradient
+import android.graphics.Shader.TileMode
 import android.os.Bundle
+import android.view.View
 import com.app.qrscanner.R
 import com.app.qrscanner.data.local.SettingsLocal
+import com.app.qrscanner.presentation.ContainerActivity
 import com.app.qrscanner.presentation.global.BaseFragment
 import kotlinx.android.synthetic.main.fragment_settings.*
 
-class SettingsFragment : BaseFragment(){
+
+class SettingsFragment : BaseFragment() {
     override val layoutRes = R.layout.fragment_settings
+    private val activity
+        get() = getActivity() as ContainerActivity
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        vibrateSwitch.isChecked = SettingsLocal.vibrate
-        copySwitch.isChecked = SettingsLocal.autoCopy
+        initValues()
+
         initListeners()
+        setGradientForTextViews()
     }
 
-    private fun initListeners(){
+    override fun onResume() {
+        changeToolbar(true)
+        super.onResume()
+    }
+
+    private fun initValues() {
+        vibrateSwitch.isChecked = SettingsLocal.vibrate
+        copySwitch.isChecked = SettingsLocal.autoCopy
+        soundSwitch.isChecked = SettingsLocal.beep
+    }
+
+    private fun changeToolbar(started: Boolean) {
+        if (started) {
+            ContainerActivity.setAppBatTitle("Настройки", activity)
+            ContainerActivity.changeSettingButtonVisibility(activity, View.GONE)
+            ContainerActivity.changeAdsButtonVisibility(activity, View.VISIBLE)
+            ContainerActivity.changeNoAdsButtonVisibility(activity, View.VISIBLE)
+            ContainerActivity.changeBackButtonVisibility(activity, View.VISIBLE)
+
+        } else {
+            ContainerActivity.setAppBatTitle("", activity)
+            ContainerActivity.changeSettingButtonVisibility(activity, View.VISIBLE)
+            ContainerActivity.changeNoAdsButtonVisibility(activity, View.GONE)
+            ContainerActivity.changeBackButtonVisibility(activity, View.GONE)
+        }
+
+    }
+
+    private fun initListeners() {
         vibrateSwitch.setOnCheckedChangeListener { _, isChecked ->
             SettingsLocal.vibrate = isChecked
         }
@@ -24,5 +60,25 @@ class SettingsFragment : BaseFragment(){
         copySwitch.setOnCheckedChangeListener { _, isChecked ->
             SettingsLocal.autoCopy = isChecked
         }
+
+        soundSwitch.setOnCheckedChangeListener { _, isChecked ->
+            SettingsLocal.beep = isChecked
+        }
     }
+
+    private fun setGradientForTextViews() {
+        val shader = LinearGradient(
+            0f,
+            8f,
+            0f,
+            18f,
+            context!!.getColor(R.color.colorPrimaryDark),
+            context!!.getColor(R.color.colorPrimary),
+            TileMode.CLAMP
+        )
+        generalSettingsTextView.paint.shader = shader
+        //helpTextView.paint.shader = shader
+    }
+
+
 }
