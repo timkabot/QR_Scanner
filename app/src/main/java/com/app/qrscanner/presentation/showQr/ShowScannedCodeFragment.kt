@@ -1,19 +1,18 @@
 package com.app.qrscanner.presentation.showQr
 
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.net.wifi.WifiManager
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.provider.Settings
 import android.view.View
 import com.app.qrscanner.R
-import com.app.qrscanner.data.CodesRepository
-import com.app.qrscanner.domain.entities.Code
+import com.app.qrscanner.domain.entities.CodeType
+import com.app.qrscanner.domain.entities.Contact
 import com.app.qrscanner.domain.entities.SerializableResult
+import com.app.qrscanner.domain.interactors.AndroidServicesInteractor
+import com.app.qrscanner.domain.interactors.CodeTypeInteractor
+import com.app.qrscanner.domain.interactors.ParsedResultInteractor
 import com.app.qrscanner.presentation.global.BaseFragment
-import com.app.qrscanner.utils.*
+import com.app.qrscanner.utils.argument
+import com.app.qrscanner.utils.whenNotNull
 import com.google.zxing.client.result.*
 import com.google.zxing.client.result.ParsedResultType.*
 import kotlinx.android.synthetic.main.fragment_show_scanned_code.*
@@ -22,9 +21,11 @@ import org.koin.android.ext.android.inject
 
 class ShowScannedCodeFragment : BaseFragment() {
     override val layoutRes = R.layout.fragment_show_scanned_code
-    private val qrCodeValue by argument(QR_CODE_VALUE, "")
     private val result by argument<SerializableResult>(RESULT_VALUE, null)
-    private val codesRepository by inject<CodesRepository>()
+
+    private val parsedResultInteractor by inject<ParsedResultInteractor>()
+    private val codeTypeInteractor by inject<CodeTypeInteractor>()
+    private val androidServicesInteractor by inject<AndroidServicesInteractor>()
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -35,10 +36,12 @@ class ShowScannedCodeFragment : BaseFragment() {
                 initContentTextView(parsedResult)
                 codeTypeTextView.text = "${parsedResult.type}"
 
-                val codeType = getCodeTypeForParsedResult(parsedResult)
-                codeTypeImage.setImageResource(getImageForCodeType(codeType))
+                val codeType = parsedResultInteractor.getCodeTypeForParsedResult(parsedResult)
+                codeTypeImage.setImageResource(codeTypeInteractor.getImageForCodeType(codeType))
             }
         }
+        retainInstance = true
+
     }
 
     private fun setContent(text: String) {
@@ -50,15 +53,27 @@ class ShowScannedCodeFragment : BaseFragment() {
             ADDRESSBOOK -> initAddressBook(parsedResult as AddressBookParsedResult)
             WIFI -> initWifi(parsedResult as WifiParsedResult)
             EMAIL_ADDRESS -> initEmail(parsedResult as EmailAddressParsedResult)
-            URI -> initUrl(parsedResult as URIParsedResult)
+            URI -> initUri(
+                parsedResult as URIParsedResult,
+                parsedResultInteractor.getCodeTypeForParsedResult(parsedResult)
+            )
             TEXT -> initText(parsedResult as TextParsedResult)
             GEO -> initGeo(parsedResult as GeoParsedResult)
             TEL -> initTel(parsedResult as TelParsedResult)
             SMS -> initSms(parsedResult as SMSParsedResult)
             CALENDAR -> initCalendar(parsedResult as CalendarParsedResult)
             ISBN -> initISBN(parsedResult as ISBNParsedResult)
+            PRODUCT -> initProduct(parsedResult as ProductParsedResult)
+            VIN -> initVin(parsedResult as VINParsedResult)
         }
+    }
 
+    private fun initVin(vin : VINParsedResult){
+        //TODO
+    }
+
+    private fun initProduct(product: ProductParsedResult){
+        //todo
     }
 
     private fun initISBN(isbn: ISBNParsedResult) {
@@ -72,249 +87,141 @@ class ShowScannedCodeFragment : BaseFragment() {
         }
 
         isbnShare.setOnClickListener {
-            shareText(isbn.isbn)
-        }
-    }
-
-    private fun saveCodeInDatabase(code: Code) {
-        Thread {
-            codesRepository.insertCode(code)
-        }.also {
-            it.start()
+            androidServicesInteractor.shareText(isbn.isbn)
         }
     }
 
     private fun initCalendar(calendar: CalendarParsedResult) {
-        var info = ""
-
-        whenNotNull(calendar.attendees) { info += "Участники: ${calendar.attendees.contentToString()}\n" }
-        whenNotNull(calendar.description) { info += "Описание: ${calendar.description}\n" }
-        whenNotNull(calendar.organizer) { info += "Организатор ${calendar.organizer}\n" }
-        whenNotNull(calendar.start) {
-            info += "Начало: ${calendar.start}\n"
-        }
-        whenNotNull(calendar.end) { info += "Конец: ${calendar.end}\n" }
-        whenNotNull(calendar.location) { info += "Местоположение: ${calendar.location}" }
-
+        val info = parsedResultInteractor.getInfoForCalendar(calendar)
         setContent(info)
         calendarLayout.visibility = View.VISIBLE
     }
 
     private fun initSms(sms: SMSParsedResult) {
-        var info = ""
-        whenNotNull(sms.numbers) { info += "Номер: ${sms.numbers?.contentToString()}\n" }
-        whenNotNull(sms.subject) { info += "Тема сообщения: ${sms.subject}\n" }
-        whenNotNull(sms.body) { info += "Текст сообщения: ${sms.body} " }
+        val info = parsedResultInteractor.getInfoForSms(sms)
         setContent(info)
         smsLayout.visibility = View.VISIBLE
 
+
         smsSendButton.setOnClickListener {
-            sendSms(number = sms.numbers[0], text = sms.body)
+            androidServicesInteractor.sendSms(number = sms.numbers[0], text = sms.body)
         }
         smsCallButton.setOnClickListener {
-            onCallClicked(sms.numbers[0])
+            androidServicesInteractor.callPhone(sms.numbers[0])
         }
     }
 
     private fun initTel(tel: TelParsedResult) {
-        var info = ""
-        whenNotNull(tel.title) { info += "Заголовок ${tel.title}" }
-        whenNotNull(tel.number) { info += "Номер ${tel.number}" }
+        val info = parsedResultInteractor.getInfoForTel(tel)
         setContent(info)
+
         telLayout.visibility = View.VISIBLE
 
-        telCallButton.setOnClickListener { onCallClicked(tel.number) }
+        telCallButton.setOnClickListener { androidServicesInteractor.callPhone(tel.number) }
         telAddToContactsButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_INSERT).apply {
-                type = ContactsContract.RawContacts.CONTENT_TYPE
-                putExtra(
-                    ContactsContract.Intents.Insert.PHONE, tel.number
-                )
-                putExtra("finishActivityOnSaveCompleted", true)
-
-            }
-            startActivity(intent)
+            whenNotNull(tel.number) { androidServicesInteractor.addToContacts(Contact(number = tel.number)) }
         }
     }
 
     private fun initGeo(geo: GeoParsedResult) {
-        var info = ""
-        whenNotNull(geo.altitude) { info += "Высота над уровнем моря: ${geo.altitude}\n" }
-        whenNotNull(geo.longitude) { info += "Долгота: ${geo.longitude}\n" }
-        whenNotNull(geo.latitude) { info += "Широта: ${geo.latitude}\n" }
+        val info = parsedResultInteractor.getInfoForGeo(geo)
         setContent(info)
         geoLayout.visibility = View.VISIBLE
-        geoShareButton.setOnClickListener { shareText(info) }
-        geoShowButton.setOnClickListener { showOnMap(geo.latitude, geo.longitude) }
-    }
-
-    private fun sendSms(text: String, number: String = "") {
-        if (number.isNotEmpty()) {
-            val uri = Uri.parse("smsto:${number}")
-            val intent = Intent(Intent.ACTION_SENDTO, uri)
-            intent.putExtra("sms_body", text)
-            startActivity(intent)
+        geoShareButton.setOnClickListener { androidServicesInteractor.shareText(info) }
+        geoShowButton.setOnClickListener {
+            androidServicesInteractor.showOnMap(geo.latitude, geo.longitude)
         }
-        val sendIntent = Intent(Intent.ACTION_VIEW).apply {
-            putExtra("sms_body", text)
-            type = "vnd.android-dir/mms-sms"
-        }
-        startActivity(sendIntent)
-
-    }
-
-    private fun sendEmail(text: String, subject: String = "", recipient: String = "") {
-        val sendIntent = Intent(Intent.ACTION_SEND).apply {
-            data = Uri.parse("mailto:")
-            type = "text/plain"
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
-            putExtra(Intent.EXTRA_SUBJECT, subject)
-            putExtra(Intent.EXTRA_TEXT, text)
-        }
-        startActivity(sendIntent)
-
     }
 
     private fun initText(text: TextParsedResult) {
-        var info = ""
-        whenNotNull(text.language) { info += "Язык: ${text.language}\n" }
-        info += text.text
+        val info = parsedResultInteractor.getInfoForText(text)
         setContent(info)
         textLayout.visibility = View.VISIBLE
-        textSendEmail.setOnClickListener { sendEmail(info) }
-        textSendSms.setOnClickListener { sendSms(info) }
+
+        textSendEmail.setOnClickListener { androidServicesInteractor.sendEmail(info) }
+        textSendSms.setOnClickListener { androidServicesInteractor.sendSms(info) }
     }
 
-    private fun onBrowseClick(url: String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        startActivity(Intent.createChooser(intent, "Browse with"))
-    }
 
-    private fun initUrl(url: URIParsedResult) {
-        var info = "${url.uri}\n"
+    private fun initUri(uri: URIParsedResult, codeType: CodeType) {
+
+        val info = parsedResultInteractor.getInfoForURI(uri)
         codeContentTextView.maxLines = 1
 
-        whenNotNull(url.title) { info += "Заголовок: ${url.title}" }
         setContent(info)
         urlLayout.visibility = View.VISIBLE
-        urlShareButton.setOnClickListener {
-            shareText(info)
+        urlShareButton.setOnClickListener { androidServicesInteractor.shareText(info) }
+        urlOpenInBrowserButton.setOnClickListener {
+            androidServicesInteractor.openURI(
+                uri,
+                codeType
+            )
         }
-        println(url.uri)
-        urlOpenInBrowserButton.setOnClickListener { onBrowseClick(url.uri) }
     }
+
 
     private fun initEmail(email: EmailAddressParsedResult) {
-        val info = getEmailInfo(email)
+        val info = parsedResultInteractor.getInfoForEmail(email)
         setContent(info)
         emailLayout.visibility = View.VISIBLE
+
+
         emailAddToContactsButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_INSERT).apply {
-                type = ContactsContract.RawContacts.CONTENT_TYPE
-                putExtra(
-                    ContactsContract.Intents.Insert.EMAIL,
-                    email.tos?.get(0)
-                )
-                putExtra("finishActivityOnSaveCompleted", true)
-            }
-            startActivity(intent)
+            val contact = Contact(email = email.tos?.get(0))
+            androidServicesInteractor.addToContacts(contact)
         }
     }
 
+
     private fun initAddressBook(addressBook: AddressBookParsedResult) {
-        val info = getAddressBookInfo(addressBook)
+        val info = parsedResultInteractor.getInfoForAddressBook(addressBook)
         setContent(info)
         addressBookLayout.visibility = View.VISIBLE
 
         addressBookAddToContactsButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_INSERT).apply {
-                type = ContactsContract.RawContacts.CONTENT_TYPE
-                putExtra(
-                    ContactsContract.Intents.Insert.EMAIL,
-                    addressBook.emails?.get(0)
-                )
-                putExtra(
-                    ContactsContract.Intents.Insert.NAME,
-                    addressBook.names?.get(0)
-                )
-                putExtra(
-                    ContactsContract.Intents.Insert.PHONE, addressBook.phoneNumbers?.get(0)
-                )
-                putExtra(
-                    ContactsContract.Intents.Insert.NOTES,
-                    addressBook.note
-                )
-                putExtra(
-                    ContactsContract.Intents.Insert.POSTAL,
-                    addressBook.addresses?.get(0)
-                )
-                putExtra(
-                    ContactsContract.Intents.Insert.COMPANY,
-                    addressBook.addresses?.get(0)
-                )
-                putExtra("finishActivityOnSaveCompleted", true)
-
-            }
-            startActivity(intent)
+            val contact = Contact(
+                number = addressBook.phoneNumbers?.get(0),
+                email = addressBook.emails?.get(0),
+                name = addressBook.names?.get(0),
+                notes = addressBook.note,
+                postal = addressBook.addresses?.get(0),
+                company = addressBook.addresses?.get(0)
+            )
+            androidServicesInteractor.addToContacts(contact)
         }
+
         addressBookCallContactButton.setOnClickListener {
-            addressBook.phoneNumbers?.get(0)?.let { it1 -> onCallClicked(it1) }
+            addressBook.phoneNumbers?.get(0)
+                ?.let { it1 -> androidServicesInteractor.callPhone(it1) }
         }
         addressShowOnMapButton.setOnClickListener {
-            addressBook.addresses?.get(0)?.let { it1 -> showOnMap(address = it1) }
+            addressBook.addresses?.get(0)
+                ?.let { it1 -> androidServicesInteractor.showOnMap(address = it1) }
         }
     }
 
-    private fun onCallClicked(phone: String) {
-        val intent =
-            Intent(Intent.ACTION_DIAL, Uri.parse("tel:${phone}"))
-        startActivity(intent)
-    }
-
-    private fun showOnMap(latitude: Double = 0.0, longitude: Double = 0.0, address: String = "") {
-        val gmmIntentUri = Uri.parse("geo:$latitude,$longitude?q=$address")
-        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-        startActivity(mapIntent)
-    }
-
-    private fun enableWiFiConnection() {
-        val wifiManager =
-            activity?.application?.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        wifiManager.isWifiEnabled = true
-        startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
-    }
 
     private fun initWifi(wifi: WifiParsedResult) {
-        val info =
-            "Имя сети: ${wifi.ssid} \nПароль: ${wifi.password} \nТип шифрования: ${wifi.networkEncryption}"
+        val info = parsedResultInteractor.getInfoForWifi(wifi)
         setContent(info)
         wifiLayout.visibility = View.VISIBLE
+
+
         wifiConnectButton.setOnClickListener {
-            enableWiFiConnection()
+            androidServicesInteractor.enableWiFiConnection()
         }
         wifiShareButton.setOnClickListener {
-            shareText(info)
+            androidServicesInteractor.shareText(info)
         }
     }
 
-    private fun shareText(text: String) {
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, text)
-            type = "text/plain"
-        }
-        val shareIntent = Intent.createChooser(sendIntent, null)
-        startActivity(shareIntent)
-    }
 
     companion object {
-        private const val QR_CODE_VALUE = "qr_code_value"
         private const val RESULT_VALUE = "result_value"
 
-        fun create(qrCodeValue: String, result: SerializableResult) =
+        fun create(result: SerializableResult) =
             ShowScannedCodeFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(QR_CODE_VALUE, qrCodeValue)
                     putSerializable(RESULT_VALUE, result)
                 }
             }

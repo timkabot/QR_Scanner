@@ -3,6 +3,7 @@ package com.app.qrscanner.domain.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.google.zxing.Result
 
 @Entity(tableName = "codes")
 data class Code(
@@ -11,8 +12,10 @@ data class Code(
     val data: String,
     @TypeConverters(CodeStatus.Converter::class)
     val status: CodeStatus,
-    val shortDescription: String = "",
+    var shortDescription: String = "",
     val qrCodePath: String = "",
+    @TypeConverters(CodeStatus.Converter::class)
+    var result: Result? = null,
     @TypeConverters(CodeType.Converter::class)
-    val type: CodeType = CodeType.TEXT
+    var type: CodeType = CodeType.TEXT
 )

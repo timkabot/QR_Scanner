@@ -27,7 +27,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:text="@string/url"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,42 +41,71 @@
             android:layout_marginEnd="15dp"
             android:background="@null"
             android:hint="@string/enter_or_paste_url_here_to_create_qr_code"
-            android:textSize="14sp"
+            android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/webSiteTextView" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/pasteButton"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="60dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/rounded_stroke_gradient_shape"
-            android:paddingHorizontal="24dp"
-            android:paddingTop="0dp"
-            android:paddingBottom="-5dp"
-            android:text="@string/paste"
-            android:textColor="@color/colorPrimary"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/editText"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+            app:layout_constraintTop_toBottomOf="@+id/editText">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/createCodeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/rounded_gradient_shape"
-            android:elevation="20dp"
-            android:paddingHorizontal="24dp"
-            android:text="@string/create"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/pasteButton"
-            app:layout_constraintEnd_toEndOf="@+id/editText"
-            app:layout_constraintTop_toTopOf="@+id/pasteButton"
-            app:layout_constraintVertical_bias="0.0" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/pasteButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_rounded_stroke_gradiet_white_background"
+                    android:paddingHorizontal="24dp"
+                    android:paddingTop="0dp"
+                    android:paddingBottom="-5dp"
+                    android:text="@string/paste"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/createCodeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_gradient_shape"
+                    android:elevation="20dp"
+                    android:paddingHorizontal="24dp"
+                    android:text="@string/create"
+                    android:textColor="@android:color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            >
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -16,17 +16,18 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import com.app.qrscanner.R
 import com.app.qrscanner.Screens
-import com.app.qrscanner.data.CodesRepository
 import com.app.qrscanner.data.local.SettingsLocal
 import com.app.qrscanner.domain.entities.Code
 import com.app.qrscanner.domain.entities.CodeStatus
 import com.app.qrscanner.domain.entities.SerializableResult
+import com.app.qrscanner.domain.interactors.DatabaseInteractor
+import com.app.qrscanner.domain.interactors.ParsedResultInteractor
 import com.app.qrscanner.presentation.ContainerActivity
 import com.app.qrscanner.presentation.global.BaseFragment
 import com.app.qrscanner.utils.HUAWEI
 import com.app.qrscanner.utils.MY_CAMERA_REQUEST_CODE
-import com.google.zxing.BarcodeFormat
 import com.google.zxing.Result
+import com.google.zxing.client.result.ResultParser
 import kotlinx.android.synthetic.main.fragment_scan.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import org.koin.android.ext.android.inject
@@ -35,8 +36,10 @@ import ru.terrakok.cicerone.Router
 
 class ScanQrFragment : BaseFragment(), ZXingScannerView.ResultHandler {
     override val layoutRes = R.layout.fragment_scan
-    private val codesRepository by inject<CodesRepository>()
+    private val databaseInteractor by inject<DatabaseInteractor>()
     private val router by inject<Router>()
+    private val parsedResultInteractor by inject<ParsedResultInteractor>()
+
     private val activity
         get() = getActivity() as ContainerActivity
 
@@ -48,35 +51,30 @@ class ScanQrFragment : BaseFragment(), ZXingScannerView.ResultHandler {
 
     private fun initListeners() {
         val showFlashDrawable =
-            AppCompatResources.getDrawable(context!!, R.drawable.baseline_flash_on_white_48)
+            AppCompatResources.getDrawable(context!!, R.drawable.flashlight)
         val hideFlashDrawable =
-            AppCompatResources.getDrawable(context!!, R.drawable.baseline_flash_off_white_48)
+            AppCompatResources.getDrawable(context!!, R.drawable.no_flashlight)
 
-//        btn_flash.setOnClickListener {
-//            if (btn_flash.icon == showFlashDrawable) {
-//                qrCodeScanner.flash = true
-//                btn_flash.icon = hideFlashDrawable
-//            } else {
-//                qrCodeScanner.flash = false
-//                btn_flash.icon = showFlashDrawable
-//            }
-//        }
+        btnFlash.setOnClickListener {
+            if (btnFlash.background == showFlashDrawable) {
+                qrCodeScanner.flash = true
+                btnFlash.background = hideFlashDrawable
+            } else {
+                qrCodeScanner.flash = false
+                btnFlash.background = showFlashDrawable
+            }
+        }
     }
 
-    private fun changeToolbar(started: Boolean) {
-        if (started) {
-
-            ContainerActivity.setAppBatTitle("", activity)
-            ContainerActivity.changeSettingButtonVisibility(activity, View.VISIBLE)
-            ContainerActivity.changeAdsButtonVisibility(activity, View.VISIBLE)
-            ContainerActivity.changeNoAdsButtonVisibility(activity, View.GONE)
-            ContainerActivity.changeBackButtonVisibility(activity, View.GONE)
-        } else {
-            ContainerActivity.setAppBatTitle("", activity)
-            ContainerActivity.changeBackButtonVisibility(activity, View.VISIBLE)
-
+    private fun changeToolbar() {
+        with(ContainerActivity) {
+            setAppBatTitle("", activity)
+            changeSettingButtonVisibility(activity, View.VISIBLE)
+            changeAdsButtonVisibility(activity, View.VISIBLE)
+            changeNoAdsButtonVisibility(activity, View.GONE)
+            changeBackButtonVisibility(activity, View.GONE)
+            changeCreateQrButtonVisibility(activity, View.GONE)
         }
-
     }
 
     private fun setScannerProperties() {
@@ -103,7 +101,7 @@ class ScanQrFragment : BaseFragment(), ZXingScannerView.ResultHandler {
 
     override fun onResume() {
         super.onResume()
-        changeToolbar(true)
+        changeToolbar()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             context?.let {
                 if (!isCameraPermissionGranted()) {
@@ -140,23 +138,26 @@ class ScanQrFragment : BaseFragment(), ZXingScannerView.ResultHandler {
         vibrator.vibrate(100)
     }
 
-    private fun saveCodeInDatabase(code: Code) {
-        Thread {
-            codesRepository.insertCode(code)
-        }.also {
-            it.start()
-        }
-    }
 
     override fun handleResult(p0: Result?) {
-
         p0?.let {
             if (SettingsLocal.vibrate) vibrate()
             if (SettingsLocal.autoCopy) copyToClipBoard(p0.text)
-            saveCodeInDatabase((Code(data = p0.text, status = CodeStatus.SCANNED)))
-            val serializableResult = SerializableResult(p0)
-            router.navigateTo(Screens.ShowScannedQRScreen(p0.text, serializableResult))
+            saveCodeToDatabase(p0)
+            router.navigateTo(Screens.ShowScannedQRScreen(SerializableResult(p0)))
         }
+    }
+
+    private fun saveCodeToDatabase(res: Result) {
+        val parsedResult = ResultParser.parseResult(res)
+        val code = Code(data = res.text, status = CodeStatus.SCANNED).apply {
+            type = parsedResultInteractor.getCodeTypeForParsedResult(parsedResult)
+            shortDescription = parsedResultInteractor.getInfoForParsedResult(parsedResult)
+            result = res
+        }
+        if (code.shortDescription.isEmpty())
+            code.shortDescription = res.text
+        databaseInteractor.saveCodeInDatabase(code)
     }
 
     private fun openCamera() {

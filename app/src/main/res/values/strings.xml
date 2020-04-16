@@ -28,4 +28,37 @@
     <string name="scanned">Сканы</string>
     <string name="created">Созданные</string>
     <string name="add_to_contacts_error">Не указан телефон или имя</string>
+    <string name="mail">Почта</string>
+    <string name="facebook">Facebook</string>
+    <string name="youtube">Youtube</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="myCard">Моя карточка</string>
+    <string name="instagram">Instagram</string>
+    <string name="wifi">WI-FI</string>
+    <string name="twitter">Twitter</string>
+    <string name="calendar">Календарь</string>
+    <string name="spotify">Spotify</string>
+    <string name="sms">СМС</string>
+    <string name="phone">Телефон</string>
+    <string name="text">Текст</string>
+    <string name="contact">Контакт</string>
+    <string name="uri">URL</string>
+    <string name="Открыть">Открыть</string>
+    <string name="safety_mode">Режим безопасности</string>
+    <string name="ssidName">Имя сети (SSID)</string>
+    <string name="wpa_wpa_2">WPA/WPA 2</string>
+    <string name="wep">WEP</string>
+    <string name="none">None</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="me_link">Me Link</string>
+    <string name="me_username">Me Username</string>
+    <string name="visit_card">Визитная карточка</string>
+    <string name="name">Имя</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="email_address">Email адрес</string>
+    <string name="profile">Профиль</string>
+    <string name="viber">Viber</string>
+    <string name="paypal">PayPal</string>
 </resources>

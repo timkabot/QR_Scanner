@@ -46,6 +46,7 @@ dependencies {
 
     //testing (Unit and UI)
     implementation 'com.google.firebase:firebase-ml-vision:24.0.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -90,5 +91,11 @@ dependencies {
 
     //gradientTextView
     implementation 'com.github.veeyaarVR:SuperGradientTextView:v1.1'
+
+
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    //country code picker
+    implementation 'com.hbb20:ccp:2.3.8'
 
 }

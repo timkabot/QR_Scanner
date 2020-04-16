@@ -4,20 +4,23 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.qrscanner.R
-import com.app.qrscanner.data.CodesRepository
+import com.app.qrscanner.Screens
 import com.app.qrscanner.domain.entities.Code
+import com.app.qrscanner.domain.entities.SerializableResult
+import com.app.qrscanner.domain.interactors.DatabaseInteractor
 import com.app.qrscanner.presentation.global.BaseFragment
 import com.app.qrscanner.presentation.global.list.CodesAdapter
-import kotlinx.android.synthetic.main.fragment_history_scanned.emptyImage
-import kotlinx.android.synthetic.main.fragment_history_scanned.recycler
+import kotlinx.android.synthetic.main.fragment_history_scanned.*
 import org.koin.android.ext.android.inject
+import ru.terrakok.cicerone.Router
 
 class ScannedCodesFragment : BaseFragment() {
     override val layoutRes = R.layout.fragment_history_scanned
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var codesAdapter: CodesAdapter
 
-    private val codesRepository by inject<CodesRepository>()
+    private val databaseInteractor by inject<DatabaseInteractor>()
+    private val router by inject<Router>()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -26,20 +29,26 @@ class ScannedCodesFragment : BaseFragment() {
     }
 
     private fun initRecycler() {
-        codesAdapter = CodesAdapter(arrayListOf())
+        codesAdapter = CodesAdapter(arrayListOf(), object : onCodeClickListener {
+            override fun onClick(code: Code) {
+                router.navigateTo(Screens.ShowScannedQRScreen(SerializableResult(result = code.result)))
+            }
+        })
         linearLayoutManager = LinearLayoutManager(context)
-        recycler.layoutManager = linearLayoutManager
-        recycler.adapter = codesAdapter
+
+        with(recycler) {
+            layoutManager = linearLayoutManager
+            adapter = codesAdapter
+        }
     }
 
     private fun getData() {
-        codesRepository.getScannedCodes().observeForever {
-            if(it.isEmpty()) {
+        databaseInteractor.getScannedCodes().observeForever {
+            if (it.isEmpty()) {
                 emptyImage?.let { emptyImageView ->
                     emptyImageView.visibility = View.VISIBLE
                 }
-            }
-            else {
+            } else {
                 emptyImage?.let { emptyImageView ->
                     emptyImageView.visibility = View.GONE
                 }
@@ -48,9 +57,15 @@ class ScannedCodesFragment : BaseFragment() {
         }
     }
 
-    private fun updateAdapter(codes : List<Code>){
-        codesAdapter.codes.clear()
-        codesAdapter.codes.addAll(codes.reversed())
-        codesAdapter.notifyDataSetChanged()
+    private fun updateAdapter(newCodes: List<Code>) {
+        with(codesAdapter) {
+            codes.clear()
+            codes.addAll(newCodes.reversed())
+            notifyDataSetChanged()
+        }
     }
+}
+
+interface onCodeClickListener {
+    fun onClick(code: Code) {}
 }

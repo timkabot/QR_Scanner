@@ -5,26 +5,29 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.qrscanner.R
 import com.app.qrscanner.domain.entities.CodeType
-import com.app.qrscanner.domain.entities.CodeType.*
-import com.app.qrscanner.utils.getImageForCodeType
-import com.app.qrscanner.utils.getNameForCodeType
+import com.app.qrscanner.domain.interactors.CodeTypeInteractor
+import com.app.qrscanner.presentation.createQr.onCodeCreateClickListener
 import com.app.qrscanner.utils.inflate
 import kotlinx.android.synthetic.main.card_codetype.view.*
 
-class CodeTypesAdapter(private val codeTypes: List<CodeType>) :
+class CodeTypesAdapter(private val codeTypes: List<CodeType>, private val onCodeCreateClickListener: onCodeCreateClickListener) :
     RecyclerView.Adapter<CodeTypesAdapter.Holder>() {
+    val codeTypeInteractor = CodeTypeInteractor()
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(codeType: CodeType) {
-            itemView.run {
+            itemView.apply {
                 codeType.also {
-                    codeTypeImage.setImageResource(getImageForCodeType(it))
-                    codeTypeName.text = getNameForCodeType(it)
+                    codeTypeImage.setImageResource(codeTypeInteractor.getImageForCodeType(it))
+                    codeTypeName.text = codeTypeInteractor.getNameForCodeType(it, itemView.context)
+                }
+                setOnClickListener {
+                    onCodeCreateClickListener.onClick(codeType)
                 }
             }
-
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {

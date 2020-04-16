@@ -30,16 +30,18 @@ class HistoryFragment : BaseFragment() {
             when (position) {
                 0 -> {
                     val customView =
-                        LayoutInflater.from(context).inflate(R.layout.custom_mytab, null)
-                    customView.imageInTab.setImageResource(R.drawable.scanned)
-                    customView.gradientTextTab.text = getString(R.string.scanned)
+                        LayoutInflater.from(context).inflate(R.layout.custom_mytab, null).apply {
+                            imageInTab.setImageResource(R.drawable.scanned)
+                            gradientTextTab.text = getString(R.string.scanned)
+                        }
                     tab.customView = customView
                 }
                 1 -> {
                     val customView =
-                        LayoutInflater.from(context).inflate(R.layout.custom_mytab, null)
-                    customView.imageInTab.setImageResource(R.drawable.created)
-                    customView.gradientTextTab.text = getString(R.string.created)
+                        LayoutInflater.from(context).inflate(R.layout.custom_mytab, null).apply {
+                            imageInTab.setImageResource(R.drawable.created)
+                            gradientTextTab.text = getString(R.string.created)
+                        }
                     tab.customView = customView
 
                 }
@@ -47,41 +49,22 @@ class HistoryFragment : BaseFragment() {
         }.attach()
     }
 
-    override fun onPause() {
-        println("History onPause")
-        super.onPause()
-    }
-
     override fun onResume() {
         super.onResume()
-        changeToolbar(started = true)
+        changeToolbar()
     }
 
-    override fun onStop() {
-        println("History onStop")
-        super.onStop()
-    }
 
-    override fun onDestroy() {
-        println("History onDestroy")
-        super.onDestroy()
-    }
-
-    private fun changeToolbar(started: Boolean) {
-        if (started) {
-
-            ContainerActivity.setAppBatTitle("История", activity)
-            ContainerActivity.changeSettingButtonVisibility(activity, View.VISIBLE)
-            ContainerActivity.changeAdsButtonVisibility(activity, View.VISIBLE)
-            ContainerActivity.changeNoAdsButtonVisibility(activity, View.GONE)
-            ContainerActivity.changeBackButtonVisibility(activity, View.GONE)
-
-        } else {
-            ContainerActivity.setAppBatTitle("", activity)
-            ContainerActivity.changeBackButtonVisibility(activity, View.VISIBLE)
+    private fun changeToolbar() {
+        with(ContainerActivity) {
+            setAppBatTitle(getString(R.string.history), activity)
+            changeSettingButtonVisibility(activity, View.VISIBLE)
+            changeAdsButtonVisibility(activity, View.VISIBLE)
+            changeNoAdsButtonVisibility(activity, View.GONE)
+            changeBackButtonVisibility(activity, View.GONE)
+            changeCreateQrButtonVisibility(activity, View.GONE)
 
         }
-
     }
 }
 

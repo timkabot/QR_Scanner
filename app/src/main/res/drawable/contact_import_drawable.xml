@@ -1,0 +1,9 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <item
+        android:gravity="center"
+        android:width="36dp"
+        android:height="36dp"
+        android:drawable="@drawable/contacts2">
+    </item>
+</layer-list>

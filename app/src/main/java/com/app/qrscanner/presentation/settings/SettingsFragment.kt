@@ -25,7 +25,7 @@ class SettingsFragment : BaseFragment() {
     }
 
     override fun onResume() {
-        changeToolbar(true)
+        changeToolbar()
         super.onResume()
     }
 
@@ -35,21 +35,13 @@ class SettingsFragment : BaseFragment() {
         soundSwitch.isChecked = SettingsLocal.beep
     }
 
-    private fun changeToolbar(started: Boolean) {
-        if (started) {
-            ContainerActivity.setAppBatTitle("Настройки", activity)
-            ContainerActivity.changeSettingButtonVisibility(activity, View.GONE)
-            ContainerActivity.changeAdsButtonVisibility(activity, View.VISIBLE)
-            ContainerActivity.changeNoAdsButtonVisibility(activity, View.VISIBLE)
-            ContainerActivity.changeBackButtonVisibility(activity, View.VISIBLE)
-
-        } else {
-            ContainerActivity.setAppBatTitle("", activity)
-            ContainerActivity.changeSettingButtonVisibility(activity, View.VISIBLE)
-            ContainerActivity.changeNoAdsButtonVisibility(activity, View.GONE)
-            ContainerActivity.changeBackButtonVisibility(activity, View.GONE)
-        }
-
+    private fun changeToolbar() {
+        ContainerActivity.setAppBatTitle("Настройки", activity)
+        ContainerActivity.changeSettingButtonVisibility(activity, View.GONE)
+        ContainerActivity.changeAdsButtonVisibility(activity, View.VISIBLE)
+        ContainerActivity.changeNoAdsButtonVisibility(activity, View.VISIBLE)
+        ContainerActivity.changeBackButtonVisibility(activity, View.VISIBLE)
+        ContainerActivity.changeCreateQrButtonVisibility(activity, View.GONE)
     }
 
     private fun initListeners() {

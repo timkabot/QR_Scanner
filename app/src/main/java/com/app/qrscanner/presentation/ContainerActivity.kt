@@ -143,5 +143,9 @@ class ContainerActivity : AppCompatActivity() {
         fun changeNoAdsButtonVisibility(activity: ContainerActivity, visibility: Int) {
             activity.noAdsButton.visibility = visibility
         }
+
+        fun changeCreateQrButtonVisibility(activity: ContainerActivity, visibility: Int) {
+            activity.createQrButton.visibility = visibility
+        }
     }
 }

@@ -121,5 +121,11 @@ class ShowCreatedCodeFragment : BaseFragment() {
                     putSerializable(RESULT_VALUE, result)
                 }
             }
+        fun create(qrCodeValue: String) =
+            ShowCreatedCodeFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable(QR_CODE_VALUE, qrCodeValue)
+                }
+            }
     }
 }
