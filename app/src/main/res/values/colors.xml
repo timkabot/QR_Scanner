@@ -8,4 +8,7 @@
     <color name="background">#efedee</color>
     <color name="app_text">#6a6a6a</color>
     <color name="app_lighttext">#9f9f9f</color>
+    <color name="semi_transparent">#80000000</color>
+    <color name="semi_transparent_white">#D9FFFFFF</color>
+
 </resources>

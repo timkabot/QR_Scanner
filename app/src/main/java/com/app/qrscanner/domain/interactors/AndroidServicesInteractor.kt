@@ -1,8 +1,8 @@
 package com.app.qrscanner.domain.interactors
 
-import android.content.ActivityNotFoundException
-import android.content.Context
-import android.content.Intent
+import android.app.Activity
+import android.content.*
+import android.graphics.Bitmap
 import android.net.Uri
 import android.net.wifi.WifiManager
 import android.provider.ContactsContract
@@ -11,10 +11,41 @@ import android.provider.Settings
 import com.app.qrscanner.domain.entities.CodeType
 import com.app.qrscanner.domain.entities.Contact
 import com.app.qrscanner.utils.generateNotInstalledAppError
+import com.google.zxing.*
 import com.google.zxing.client.result.URIParsedResult
+import com.google.zxing.common.HybridBinarizer
+import java.util.*
 
 class AndroidServicesInteractor(private val context: Context) {
+    fun copyToClipBoard(textToCopy: String, activity: Activity) {
+        val clipboard = activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("RANDOM UUID", textToCopy)
+        clipboard.setPrimaryClip(clip)
+    }
 
+    fun decodeWithZxing(bitmap: Bitmap): Result? {
+        val multiFormatReader = MultiFormatReader()
+        val hints: MutableMap<DecodeHintType, Any?> = Hashtable()
+        hints[DecodeHintType.PURE_BARCODE] = java.lang.Boolean.TRUE
+        multiFormatReader.setHints(hints)
+        val width = bitmap.width
+        val height = bitmap.height
+        val pixels = IntArray(width * height)
+        bitmap.getPixels(pixels, 0, width, 0, 0, width, height)
+        var rawResult: Result? = null
+        val source = RGBLuminanceSource(width, height, pixels)
+        if (source != null) {
+            val binaryBitmap = BinaryBitmap(HybridBinarizer(source))
+            try {
+                rawResult = multiFormatReader.decodeWithState(binaryBitmap)
+            } catch (re: ReaderException) {
+                re.printStackTrace()
+            } finally {
+                multiFormatReader.reset()
+            }
+        }
+        return rawResult
+    }
     fun addToContacts(contact: Contact) {
         val contactIntent = Intent(Intent.ACTION_INSERT).apply {
             type = ContactsContract.RawContacts.CONTENT_TYPE

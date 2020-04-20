@@ -34,14 +34,15 @@ class ParsedResultInteractor(private val codeTypeInteractor: CodeTypeInteractor)
     fun getInfoForAddressBook(addressBook: AddressBookParsedResult): String {
         var info = ""
         with(addressBook) {
+            println(names)
             whenNotNull(names) { if (names.isNotEmpty()) info += "Имя: ${names.contentToString()}\n" }
-            whenNotNull(nicknames) { if (nicknames.isNotEmpty()) info += "Прозвище: ${nicknames.contentToString()}\n" }
+            whenNotNull(nicknames) { if (nicknames.isNotEmpty()  && nicknames[0]!= null) info += "Прозвище: ${nicknames.contentToString()}\n" }
             whenNotNull(pronunciation) { if (pronunciation.isNotEmpty()) info += "Произношение: ${pronunciation}\n" }
-            whenNotNull(phoneNumbers) { if (phoneNumbers.isNotEmpty()) info += "Номер: ${phoneNumbers.contentToString()}\n" }
-            whenNotNull(phoneTypes) { if (phoneTypes.isNotEmpty()) info += "Тип номера: ${phoneTypes.contentToString()}\n" }
-            whenNotNull(emails) { if (emails.isNotEmpty()) info += "Email: ${emails.contentToString()}\n" }
-            whenNotNull(emailTypes) { if (emailTypes.isNotEmpty()) info += "Тип email: ${emailTypes.contentToString()}\n" }
-            whenNotNull(geo) { if (geo.isNotEmpty()) info += "Геопозиция : ${geo.contentToString()}\n" }
+            whenNotNull(phoneNumbers) { if (phoneNumbers.isNotEmpty()  && phoneNumbers[0]!= null) info += "Номер: ${phoneNumbers.contentToString()}\n" }
+            whenNotNull(phoneTypes) { if (phoneTypes.isNotEmpty() && phoneTypes[0]!= null) info += "Тип номера: ${phoneTypes.contentToString()}\n" }
+            whenNotNull(emails) { if (emails.isNotEmpty()  && emails[0]!= null) info += "Email: ${emails.contentToString()}\n" }
+            whenNotNull(emailTypes) { if (emailTypes.isNotEmpty() && emailTypes[0]!= null) info += "Тип email: ${emailTypes.contentToString()}\n" }
+            whenNotNull(geo) { if (geo.isNotEmpty()  && geo[0]!= null) info += "Геопозиция : ${geo.contentToString()}\n" }
 
             whenNotNull(instantMessenger) { if (instantMessenger.isNotEmpty()) info += "Связь: ${instantMessenger}\n" }
             whenNotNull(note) { if (note.isNotEmpty()) info += "Заметки: ${note}\n" }

@@ -7,13 +7,16 @@
     android:layout_marginLeft="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginRight="8dp"
+    android:minHeight="68dp"
+    android:adjustViewBounds="true"
     android:background="@drawable/container_white"
     android:padding="4dp">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:tint="@color/app_text"
         android:src="@drawable/history_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,11 +24,12 @@
 
     <ImageView
         android:id="@+id/cardImage"
-        android:layout_width="64dp"
+        android:layout_width="0dp"
         android:layout_height="64dp"
+        android:adjustViewBounds="true"
+        android:maxWidth="64dp"
         android:layout_marginVertical="4dp"
-        android:layout_marginStart="8dp"
-        android:padding="8dp"
+        android:layout_marginStart="3dp"
         android:scaleType="fitCenter"
         android:src="@drawable/instagram"
         app:layout_constraintBottom_toBottomOf="parent"

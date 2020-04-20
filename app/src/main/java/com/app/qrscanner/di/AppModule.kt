@@ -2,10 +2,9 @@ package com.app.qrscanner.di
 
 import com.app.qrscanner.data.CodesRepository
 import com.app.qrscanner.data.local.AppDatabase
-import com.app.qrscanner.domain.interactors.AndroidServicesInteractor
-import com.app.qrscanner.domain.interactors.CodeTypeInteractor
-import com.app.qrscanner.domain.interactors.DatabaseInteractor
-import com.app.qrscanner.domain.interactors.ParsedResultInteractor
+import com.app.qrscanner.domain.interactors.*
+import com.app.qrscanner.presentation.MainViewModel
+import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import ru.terrakok.cicerone.Cicerone
 
@@ -19,5 +18,6 @@ fun createAppModule() = module {
     single { DatabaseInteractor(get()) }
     single { ParsedResultInteractor(get()) }
     single { AndroidServicesInteractor(get()) }
-
+    single { MainViewModel(get(),get(), get(), get(), get()) }
+    factory { MyResultParser(get()) }
 }

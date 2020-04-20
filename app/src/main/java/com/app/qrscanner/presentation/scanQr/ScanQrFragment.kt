@@ -2,43 +2,59 @@ package com.app.qrscanner.presentation.scanQr
 
 import android.Manifest
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.app.Service
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.os.Vibrator
+import android.provider.MediaStore
 import android.view.View
+import android.view.ViewGroup
+import android.widget.RelativeLayout
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
+import androidx.core.content.ContextCompat.getColor
+import androidx.core.view.marginBottom
 import com.app.qrscanner.R
 import com.app.qrscanner.Screens
 import com.app.qrscanner.data.local.SettingsLocal
 import com.app.qrscanner.domain.entities.Code
 import com.app.qrscanner.domain.entities.CodeStatus
 import com.app.qrscanner.domain.entities.SerializableResult
+import com.app.qrscanner.domain.interactors.AndroidServicesInteractor
 import com.app.qrscanner.domain.interactors.DatabaseInteractor
 import com.app.qrscanner.domain.interactors.ParsedResultInteractor
 import com.app.qrscanner.presentation.ContainerActivity
+import com.app.qrscanner.presentation.MainViewModel
+import com.app.qrscanner.presentation.customScannerView.MyZxing
 import com.app.qrscanner.presentation.global.BaseFragment
 import com.app.qrscanner.utils.HUAWEI
 import com.app.qrscanner.utils.MY_CAMERA_REQUEST_CODE
-import com.google.zxing.Result
+import com.google.zxing.*
 import com.google.zxing.client.result.ResultParser
+import com.google.zxing.common.HybridBinarizer
+import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.fragment_scan.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 import ru.terrakok.cicerone.Router
+import java.util.*
 
 
-class ScanQrFragment : BaseFragment(), ZXingScannerView.ResultHandler {
+class ScanQrFragment : BaseFragment(), MyZxing.ResultHandler {
     override val layoutRes = R.layout.fragment_scan
     private val databaseInteractor by inject<DatabaseInteractor>()
     private val router by inject<Router>()
     private val parsedResultInteractor by inject<ParsedResultInteractor>()
+    private val androidServicesInteractor by inject<AndroidServicesInteractor>()
+    private val PICK_IMAGE = 100
+    private val mainViewModel: MainViewModel by viewModel()
 
     private val activity
         get() = getActivity() as ContainerActivity
@@ -51,9 +67,9 @@ class ScanQrFragment : BaseFragment(), ZXingScannerView.ResultHandler {
 
     private fun initListeners() {
         val showFlashDrawable =
-            AppCompatResources.getDrawable(context!!, R.drawable.flashlight)
+            AppCompatResources.getDrawable(context!!, R.drawable.flashlight_icon)
         val hideFlashDrawable =
-            AppCompatResources.getDrawable(context!!, R.drawable.no_flashlight)
+            AppCompatResources.getDrawable(context!!, R.drawable.no_flashlight_icon)
 
         btnFlash.setOnClickListener {
             if (btnFlash.background == showFlashDrawable) {
@@ -64,7 +80,12 @@ class ScanQrFragment : BaseFragment(), ZXingScannerView.ResultHandler {
                 btnFlash.background = showFlashDrawable
             }
         }
+
+        galleyPick.setOnClickListener {
+            openGallery()
+        }
     }
+
 
     private fun changeToolbar() {
         with(ContainerActivity) {
@@ -81,27 +102,33 @@ class ScanQrFragment : BaseFragment(), ZXingScannerView.ResultHandler {
         qrCodeScanner.setAutoFocus(true)
         qrCodeScanner.setBorderLineLength(200)
         qrCodeScanner.setBorderStrokeWidth(10)
-        qrCodeScanner.setLaserColor(R.color.colorAccent)
+        qrCodeScanner.setMaskColor(getColor(context!!,R.color.semi_transparent))
+        qrCodeScanner.setSquareViewFinder(false)
+
+
+        //= qrCodeScanner.viewFinder.mFramingRect!!.bottom
         if (Build.MANUFACTURER.equals(HUAWEI, ignoreCase = true))
             qrCodeScanner.setAspectTolerance(0.5f)
         qrCodeScanner.startCamera()
-    }
 
-    // Playing sound
-    // will play button toggle sound on flash on / off
-//    private fun playSound() {
-//        if (isFlashOn) {
-//            AudioPlayer.player = MediaPlayer.create(activity, R.raw.light_switch_off)
-//        } else {
-//            AudioPlayer.player = MediaPlayer.create(activity, R.raw.light_switch_on)
-//        }
-//        AudioPlayer.player.setOnCompletionListener(OnCompletionListener { player -> player.release() })
-//        AudioPlayer.player.start()
-//    }
+    }
+    private fun openGallery() {
+//        val gallery =
+//            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+//        startActivityForResult(gallery, PICK_IMAGE)
+        CropImage.activity()
+            .start(context!!, this);
+    }
+    private fun playSound() {
+        val player = MediaPlayer.create(activity, R.raw.beep)
+        player.setOnCompletionListener { player -> player.release() }
+        player.start()
+    }
 
     override fun onResume() {
         super.onResume()
         changeToolbar()
+        println(qrCodeScanner.viewFinder.framingRect!!)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             context?.let {
                 if (!isCameraPermissionGranted()) {
@@ -127,11 +154,6 @@ class ScanQrFragment : BaseFragment(), ZXingScannerView.ResultHandler {
         qrCodeScanner.stopCameraPreview()
     }
 
-    private fun copyToClipBoard(textToCopy: String) {
-        val clipboard = activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("RANDOM UUID", textToCopy)
-        clipboard.setPrimaryClip(clip)
-    }
 
     private fun vibrate() {
         val vibrator = activity.application?.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
@@ -140,11 +162,16 @@ class ScanQrFragment : BaseFragment(), ZXingScannerView.ResultHandler {
 
 
     override fun handleResult(p0: Result?) {
-        p0?.let {
+        println("Scanned ${p0!!.text}")
+        p0.let {
             if (SettingsLocal.vibrate) vibrate()
-            if (SettingsLocal.autoCopy) copyToClipBoard(p0.text)
+            if (SettingsLocal.autoCopy) androidServicesInteractor.copyToClipBoard(p0.text, activity)
+            if (SettingsLocal.beep) playSound()
+
+            println()
             saveCodeToDatabase(p0)
-            router.navigateTo(Screens.ShowScannedQRScreen(SerializableResult(p0)))
+            mainViewModel.lastScannedResult = p0
+            router.navigateTo(Screens.ShowScannedQRScreen)
         }
     }
 
@@ -163,6 +190,19 @@ class ScanQrFragment : BaseFragment(), ZXingScannerView.ResultHandler {
     private fun openCamera() {
         qrCodeScanner.startCamera()
         qrCodeScanner.setResultHandler(this)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+            val resultUri = CropImage.getActivityResult(data).uri
+            println("get cropped $resultUri")
+            val bitmap =
+                MediaStore.Images.Media.getBitmap(activity.contentResolver, resultUri)
+
+            val result = mainViewModel.androidServicesInteractor.decodeWithZxing( bitmap)
+            handleResult(result)
+        }
     }
 
     override fun onRequestPermissionsResult(

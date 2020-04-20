@@ -2,9 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
-    android:layout_margin="16dp">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
@@ -37,18 +35,18 @@
             android:id="@+id/titleTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
             android:text="Заголовок"
             android:textColor="@color/app_lighttext"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/titleInput"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:drawableEnd="@drawable/contact_import_drawable"
+            android:layout_marginHorizontal="16dp"
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="@+id/textView8"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +56,9 @@
             android:id="@+id/textView8"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
+
             android:text="Локация"
             android:textColor="@color/app_lighttext"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,6 +70,8 @@
             android:id="@+id/locationInput"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+
             android:outlineAmbientShadowColor="@color/colorPrimaryDark"
             android:outlineSpotShadowColor="@color/colorPrimaryDark"
             app:layout_constraintEnd_toEndOf="parent"
@@ -81,8 +83,10 @@
             android:id="@+id/birthdateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:text="Весь день"
+
             android:textColor="@color/app_lighttext"
 
             app:layout_constraintStart_toStartOf="parent"
@@ -92,58 +96,80 @@
             android:id="@+id/alldaySwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:layout_marginHorizontal="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/birthdateTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/birthdateTextView"></Switch>
+            app:layout_constraintTop_toTopOf="@+id/birthdateTextView" />
 
         <TextView
             android:id="@+id/startTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+
             android:text="Начало"
             android:textColor="@color/app_lighttext"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/birthdateTextView" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/startDateText"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
+
+            android:maxLines="1"
             android:text="26 апреля 1997"
+            android:gravity="center"
+            android:inputType="text"
+            android:focusable="false"
+            android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/startTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/startTextView"></TextView>
+            app:layout_constraintTop_toTopOf="@+id/startTextView" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/endDateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="26 апреля 1997"
+            android:focusable="false"
+            android:textSize="12sp"
+            android:inputType="text"
+
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/endTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/endTextView" />
 
         <TextView
             android:id="@+id/endTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
             android:text="Конец"
             android:textColor="@color/app_lighttext"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/startTextView" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:text="26 апреля 1997"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/endTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/endTextView"></TextView>
 
         <TextView
             android:id="@+id/noteTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
             android:text="Описание"
             android:textColor="@color/app_lighttext"
 
@@ -154,7 +180,9 @@
             android:id="@+id/descriptionInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/edittext_border"
             android:gravity="top"
             android:hint="Введите текст"
@@ -162,6 +190,7 @@
             android:minHeight="150dp"
             android:padding="16dp"
             android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/noteTextView" />

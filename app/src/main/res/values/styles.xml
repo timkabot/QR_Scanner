@@ -12,7 +12,8 @@
         <item name="editTextStyle">@style/myEditText</item>
     </style>
     <style name="myEditText" parent="Widget.AppCompat.EditText">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/app_text</item>
     </style>
     <style name="myTextView">
         <item name="android:textColor">@color/app_text</item>

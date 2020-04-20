@@ -3,18 +3,16 @@ package com.app.qrscanner.utils
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.os.Bundle
-import android.telephony.PhoneNumberUtils
+import android.text.BoringLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import com.app.qrscanner.domain.entities.CodeType
-import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
+import net.glxn.qrgen.android.QRCode
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -27,9 +25,20 @@ fun String.showToast(context: Context) {
 
 }
 
-fun main(){
-    println(CodeType.values().toList().filter { (it != CodeType.URI && it != CodeType.VIN && it != CodeType.GEO)})
+fun CharSequence?.isNotNullOrEmpty(): Boolean {
+    if(this == null) return false
+    return length > 0
 }
+
+
+fun List<String>?.isNotNullOrEmpty(): Boolean {
+    if(this == null || size<1) return false
+    return get(0).isNotEmpty()
+}
+fun List<String>.getValue(): String {
+    return get(0)
+}
+
 inline fun <T : Any, R> whenNotNull(input: T?, callback: (T) -> R): R? {
     return input?.let(callback)
 }
@@ -39,15 +48,10 @@ fun generateNotInstalledAppError(appName: String, context: Context){
 }
 fun createQR(value: String, width: Int = 512, height: Int = 512): Bitmap {
     val writer = QRCodeWriter()
-    val bitMatrix = writer.encode(value, BarcodeFormat.QR_CODE, width, height)
-    val bitmap = Bitmap.createBitmap(bitMatrix.width, bitMatrix.height, Bitmap.Config.RGB_565)
-
-    for (x in 0 until bitMatrix.width) {
-        for (y in 0 until height) {
-            bitmap.setPixel(x, y, if (bitMatrix.get(x, y)) Color.BLACK else Color.WHITE)
-        }
-    }
-    return bitmap
+    return QRCode.from(value)
+        .withCharset("UTF-8")
+        .withSize(1024,1024)
+        .bitmap()
 }
 
 inline fun <reified T> extra(

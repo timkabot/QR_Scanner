@@ -6,21 +6,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.qrscanner.R
 import com.app.qrscanner.Screens
 import com.app.qrscanner.domain.entities.Code
-import com.app.qrscanner.domain.entities.SerializableResult
-import com.app.qrscanner.domain.interactors.DatabaseInteractor
+import com.app.qrscanner.presentation.MainViewModel
 import com.app.qrscanner.presentation.global.BaseFragment
 import com.app.qrscanner.presentation.global.list.CodesAdapter
 import kotlinx.android.synthetic.main.fragment_history_scanned.*
-import org.koin.android.ext.android.inject
-import ru.terrakok.cicerone.Router
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class ScannedCodesFragment : BaseFragment() {
     override val layoutRes = R.layout.fragment_history_scanned
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var codesAdapter: CodesAdapter
+    private val mainVM: MainViewModel by viewModel()
 
-    private val databaseInteractor by inject<DatabaseInteractor>()
-    private val router by inject<Router>()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -29,9 +26,10 @@ class ScannedCodesFragment : BaseFragment() {
     }
 
     private fun initRecycler() {
-        codesAdapter = CodesAdapter(arrayListOf(), object : onCodeClickListener {
+        codesAdapter = CodesAdapter(arrayListOf(), object : MyOnCodeClickListener {
             override fun onClick(code: Code) {
-                router.navigateTo(Screens.ShowScannedQRScreen(SerializableResult(result = code.result)))
+                mainVM.lastScannedResult = code.result
+                mainVM.goToScreen(Screens.ShowScannedQRScreen)
             }
         })
         linearLayoutManager = LinearLayoutManager(context)
@@ -43,7 +41,7 @@ class ScannedCodesFragment : BaseFragment() {
     }
 
     private fun getData() {
-        databaseInteractor.getScannedCodes().observeForever {
+        mainVM.databaseInteractor.getScannedCodes().observeForever {
             if (it.isEmpty()) {
                 emptyImage?.let { emptyImageView ->
                     emptyImageView.visibility = View.VISIBLE
@@ -66,6 +64,6 @@ class ScannedCodesFragment : BaseFragment() {
     }
 }
 
-interface onCodeClickListener {
+interface MyOnCodeClickListener {
     fun onClick(code: Code) {}
 }

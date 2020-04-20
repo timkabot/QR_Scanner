@@ -7,9 +7,13 @@ import android.widget.Button
 import androidx.core.content.ContextCompat
 import com.app.qrscanner.R
 import com.app.qrscanner.presentation.global.BaseFragment
+import com.app.qrscanner.presentation.global.CreateCodeBaseFragment
+import com.app.qrscanner.utils.showToast
 import kotlinx.android.synthetic.main.fragment_create_paypal_code.*
+import net.glxn.qrgen.core.scheme.Schema
+import net.glxn.qrgen.core.scheme.Url
 
-class CreatePaypalCodeFragment : BaseFragment(), View.OnClickListener{
+class CreatePaypalCodeFragment : CreateCodeBaseFragment(), View.OnClickListener{
     override val layoutRes = R.layout.fragment_create_paypal_code
 
     private lateinit var btnToUnfocus: Button
@@ -24,6 +28,22 @@ class CreatePaypalCodeFragment : BaseFragment(), View.OnClickListener{
         btnToUnfocus = btn0
 
     }
+    private fun checkInputs(): Boolean {
+        if (editText2.text.isEmpty()) {
+            "Введите информацию".showToast(context!!)
+            return false
+        }
+        return true
+    }
+
+    override fun createCode(): Pair<String, Schema> {
+        if (checkInputs()) {
+            val result = "paypal.me/${editText2.text}"
+            if (btnToUnfocus == btn0) return Pair(result, Url())
+            if (btnToUnfocus == btn1) return Pair(editText2.text.toString(), Url())
+        }
+        return Pair("", Url())
+    }
 
     override fun onClick(btn: View?) {
         if (btn != null) {
@@ -31,9 +51,12 @@ class CreatePaypalCodeFragment : BaseFragment(), View.OnClickListener{
             when (btn.id) {
                 R.id.btn0 -> {
                     setFocus(btn0)
+                    btnToUnfocus = btn0
+
                 }
                 R.id.btn1 -> {
                     setFocus(btn1)
+                    btnToUnfocus = btn1
                 }
             }
         }

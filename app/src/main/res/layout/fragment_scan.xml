@@ -2,22 +2,47 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <me.dm7.barcodescanner.zxing.ZXingScannerView
+
+    <com.app.qrscanner.presentation.customScannerView.MyZxing
         android:id="@+id/qrCodeScanner"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <TextView
+        android:id="@+id/scanQrText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/semi_transparent_white"
+        android:padding="8dp"
+        android:text="Расположите QR код/штрих-код по \n центру рамки" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnFlash"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="65dp"
-        android:layout_marginBottom="115dp"
-        android:background="@drawable/flashlight"
+        android:layout_marginEnd="45dp"
+        android:layout_marginBottom="75dp"
+        android:background="@drawable/flashlight_icon"
         android:padding="8dp" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/galleyPick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="45dp"
+        android:layout_marginBottom="75dp"
+        android:background="@drawable/gallery_pick_drawable"
+        android:padding="8dp" />
 </RelativeLayout>

@@ -7,10 +7,9 @@ import com.app.qrscanner.R
 import com.app.qrscanner.Screens
 import com.app.qrscanner.data.CodesRepository
 import com.app.qrscanner.domain.entities.Code
-import com.app.qrscanner.domain.entities.SerializableResult
 import com.app.qrscanner.presentation.global.BaseFragment
 import com.app.qrscanner.presentation.global.list.CodesAdapter
-import com.app.qrscanner.presentation.history.scannedCodesHistory.onCodeClickListener
+import com.app.qrscanner.presentation.history.scannedCodesHistory.MyOnCodeClickListener
 import kotlinx.android.synthetic.main.fragment_history_created.*
 import org.koin.android.ext.android.inject
 import ru.terrakok.cicerone.Router
@@ -30,9 +29,9 @@ class CreatedCodesHistory :BaseFragment(){
     }
 
     private fun initRecycler() {
-        codesAdapter = CodesAdapter(arrayListOf(), object : onCodeClickListener {
+        codesAdapter = CodesAdapter(arrayListOf(), object : MyOnCodeClickListener {
             override fun onClick(code: Code) {
-                router.navigateTo(Screens.ShowCreatedQRScreen(code.data, SerializableResult()))
+                router.navigateTo(Screens.ShowCreatedQRScreen(code.data))
             }
         })
         linearLayoutManager = LinearLayoutManager(context)

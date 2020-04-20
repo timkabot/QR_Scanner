@@ -6,10 +6,13 @@ import android.view.View
 import android.widget.Button
 import androidx.core.content.ContextCompat
 import com.app.qrscanner.R
-import com.app.qrscanner.presentation.global.BaseFragment
+import com.app.qrscanner.presentation.global.CreateCodeBaseFragment
+import com.app.qrscanner.utils.showToast
 import kotlinx.android.synthetic.main.fragment_create_instagram_code.*
+import net.glxn.qrgen.core.scheme.Schema
+import net.glxn.qrgen.core.scheme.Url
 
-class CreateInstagramCodeFragment : BaseFragment(), View.OnClickListener{
+class CreateInstagramCodeFragment : CreateCodeBaseFragment(), View.OnClickListener {
     override val layoutRes = R.layout.fragment_create_instagram_code
 
     private lateinit var btnToUnfocus: Button
@@ -25,15 +28,38 @@ class CreateInstagramCodeFragment : BaseFragment(), View.OnClickListener{
 
     }
 
+    private fun checkInputs(): Boolean {
+        if (editText2.text.isEmpty()) {
+            "Введите информацию".showToast(context!!)
+            return false
+        }
+        return true
+    }
+
+    override fun createCode(): Pair<String, Schema> {
+        if (checkInputs()) {
+            val result = "instagram.com/${editText2.text}"
+            if (btnToUnfocus == btn0) return Pair(result, Url())
+            if (btnToUnfocus == btn1) return Pair(editText2.text.toString(), Url())
+        }
+        return Pair("", Url())
+    }
+
     override fun onClick(btn: View?) {
         if (btn != null) {
 
             when (btn.id) {
                 R.id.btn0 -> {
                     setFocus(btn0)
+                    editText2.hint = "Введите профиль Instagram"
+
+                    btnToUnfocus = btn0
                 }
                 R.id.btn1 -> {
                     setFocus(btn1)
+                    editText2.hint = "Введите ссылку"
+
+                    btnToUnfocus = btn1
                 }
             }
         }

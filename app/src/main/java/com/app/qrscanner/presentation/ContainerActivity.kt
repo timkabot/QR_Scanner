@@ -2,58 +2,86 @@ package com.app.qrscanner.presentation
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
 import com.app.qrscanner.R
 import com.app.qrscanner.Screens
+import com.app.qrscanner.domain.entities.Code
+import com.app.qrscanner.domain.entities.CodeStatus
+import com.app.qrscanner.domain.entities.CodeType
+import com.app.qrscanner.domain.interactors.CodeTypeInteractor
+import com.app.qrscanner.domain.interactors.DatabaseInteractor
 import com.app.qrscanner.presentation.global.BaseFragment
+import com.app.qrscanner.presentation.global.CreateCodeBaseFragment
+import com.google.android.gms.ads.*
 import kotlinx.android.synthetic.main.activity_main_container.*
-import kotlinx.android.synthetic.main.toolbar_custom.*
-import kotlinx.android.synthetic.main.toolbar_custom.view.*
+import kotlinx.android.synthetic.main.custom_toolbar.*
+import kotlinx.android.synthetic.main.custom_toolbar.view.*
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import ru.terrakok.cicerone.commands.Command
-import java.util.*
 
 
 class ContainerActivity : AppCompatActivity() {
 
     private val navigatorHolder by inject<NavigatorHolder>()
     private val router by inject<Router>()
+    private val databaseInteractor by inject<DatabaseInteractor>()
+    private val codeTypeInteractor by inject<CodeTypeInteractor>()
+    private val mainVM: MainViewModel by viewModel()
+    private lateinit var mInterstitialAd: InterstitialAd
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setLocale()
         setContentView(R.layout.activity_main_container)
         initActionBar()
         setupNavigationBar()
-        setStatusBarGradient(this)
         initListeners()
-        bottomNavigationView.selectedItemId = R.id.nagivation_readBarcode
+        initAds()
         router.newRootScreen(Screens.ScanQRScreen)
-        println(supportActionBar)
     }
 
     private fun initListeners() {
+
+
         settingsButton.setOnClickListener {
-            router.navigateTo(Screens.SettingsScreen)
+            mainVM.goToScreen(Screens.SettingsScreen)
         }
 
         backButton.setOnClickListener { router.exit() }
-    }
 
-    private fun setLocale() {
+        createQrButton.setOnClickListener {
+            if (currentFragment is CreateCodeBaseFragment) {
+                val frg = currentFragment as CreateCodeBaseFragment
+                val (result, schema) = frg.createCode()
+                if (result != "") {
+                    mainVM.goToScreen(Screens.ShowCreatedQRScreen(result))
 
-        applicationContext.resources.configuration.setLocale(Locale("ru"))
-        val primaryLocale = applicationContext.resources.configuration.locales
-        println(primaryLocale)
+                    var codeType = codeTypeInteractor.getCodeTypeForSchema(schema)
+                    if(codeType == CodeType.URI) codeType =codeTypeInteractor.getSiteType(result)
 
+                    println("Trying to save \n ${result}")
+                    databaseInteractor.saveCodeInDatabase(
+                        Code(
+                            data = result,
+                            status = CodeStatus.CREATED,
+                            type = codeType
+                        )
+                    )
+                }
+            }
+        }
     }
 
     private fun initActionBar() {
@@ -62,6 +90,7 @@ class ContainerActivity : AppCompatActivity() {
             customView = myToolbar
         }
         setSupportActionBar(customToolbar.myToolbar)
+        setStatusBarGradient(this)
     }
 
     private val navigator: Navigator =
@@ -78,22 +107,50 @@ class ContainerActivity : AppCompatActivity() {
         }
 
     private val currentFragment: BaseFragment?
-        get() = supportFragmentManager.findFragmentById(R.id.container) as? BaseFragment
+        get() {
+            if (supportFragmentManager.findFragmentById(R.id.container) is CreateCodeBaseFragment)
+                return supportFragmentManager.findFragmentById(R.id.container) as? CreateCodeBaseFragment
+            return supportFragmentManager.findFragmentById(R.id.container) as? BaseFragment
+        }
 
+    private fun initAds(){
+        //bannerAd
+        adView.loadAd(AdRequest.Builder().addTestDevice("4E6DEAA92CE1C5B77ABD737D7732711B").build())
 
+        //interstitial ad
+        mInterstitialAd = InterstitialAd(this).apply {
+            adUnitId = "ca-app-pub-3940256099942544/1033173712"
+            loadAd(AdRequest.Builder().addTestDevice("4E6DEAA92CE1C5B77ABD737D7732711B").build())
+            adListener = object : AdListener() {
+                override fun onAdClosed() {
+                    mInterstitialAd.loadAd(AdRequest.Builder().build())
+                }
+            }
+        }
+
+        mainVM.adsEvent.observe(this, Observer {
+            println("Need to show ads")
+            if (mInterstitialAd.isLoaded) {
+                println("Truing to show ads")
+                mInterstitialAd.show()
+            }
+        })
+    }
     private fun setupNavigationBar() {
         fab.setOnClickListener {
-            router.navigateTo(Screens.ScanQRScreen)
+            mainVM.goToScreen(Screens.ScanQRScreen)
         }
         //bottomNavigationView.itemTextColor = R.drawable.gradient_background
         //bottomNavigationView.itemIconTintList = null
+        bottomNavigationView.selectedItemId = R.id.nagivation_readBarcode
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nagivation_history -> {
-                    router.navigateTo(Screens.HistoryScreen)
+                    mainVM.goToScreen(Screens.HistoryScreen)
                 }
                 R.id.nagivation_createBarcode -> {
-                    router.navigateTo(Screens.CreateQRScreen)
+                    mainVM.goToScreen(Screens.CreateQRScreen)
+
                 }
                 R.id.nagivation_readBarcode -> {
                 }
@@ -124,6 +181,7 @@ class ContainerActivity : AppCompatActivity() {
     override fun onBackPressed() {
         router.exit()
     }
+
     companion object {
         fun setAppBatTitle(title: String, activity: ContainerActivity) {
             activity.toolbarTitle?.text = title
@@ -132,6 +190,7 @@ class ContainerActivity : AppCompatActivity() {
         fun changeBackButtonVisibility(activity: ContainerActivity, visibility: Int) {
             activity.backButton.visibility = visibility
         }
+
         fun changeAdsButtonVisibility(activity: ContainerActivity, visibility: Int) {
             activity.adsButton.visibility = visibility
         }

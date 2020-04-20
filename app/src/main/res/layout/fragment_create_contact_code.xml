@@ -11,7 +11,7 @@
         android:layout_width="@dimen/big_icon_size"
         android:layout_height="@dimen/big_icon_size"
         android:layout_marginTop="24dp"
-        android:src="@drawable/contacts"
+        android:src="@drawable/contacts2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,23 +36,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/nameInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <com.mindorks.editdrawabletext.EditDrawableText
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:drawableEnd="@drawable/contact_import_drawable"
-            android:inputType="text"></com.google.android.material.textfield.TextInputEditText>
-    </com.google.android.material.textfield.TextInputLayout>
-
+            android:layout_height="wrap_content"
+            android:id="@+id/nameInput"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="12sp"
+            android:textColor="@color/app_text"
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+            android:drawableRight="@drawable/contact_import_drawable"
+            android:inputType="text" />
 
     <TextView
         android:id="@+id/textView8"
@@ -70,6 +65,7 @@
         android:id="@+id/phoneInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:outlineAmbientShadowColor="@color/colorPrimaryDark"
         android:outlineSpotShadowColor="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,6 +88,7 @@
         android:id="@+id/emailInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:outlineAmbientShadowColor="@color/colorPrimaryDark"
         android:outlineSpotShadowColor="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"

@@ -8,9 +8,13 @@ import android.widget.Button
 import androidx.core.content.ContextCompat
 import com.app.qrscanner.R
 import com.app.qrscanner.presentation.global.BaseFragment
+import com.app.qrscanner.presentation.global.CreateCodeBaseFragment
+import com.app.qrscanner.utils.showToast
 import kotlinx.android.synthetic.main.fragment_create_twitter_code.*
+import net.glxn.qrgen.core.scheme.Schema
+import net.glxn.qrgen.core.scheme.Url
 
-class CreateTwitterCodeFragment : BaseFragment(), View.OnClickListener{
+class CreateTwitterCodeFragment : CreateCodeBaseFragment(), View.OnClickListener{
     override val layoutRes = R.layout.fragment_create_twitter_code
 
     private lateinit var btnToUnfocus: Button
@@ -25,16 +29,37 @@ class CreateTwitterCodeFragment : BaseFragment(), View.OnClickListener{
         btnToUnfocus = btn0
 
     }
+    private fun checkInputs(): Boolean {
+        if (editText2.text.isEmpty()) {
+            "Введите информацию".showToast(context!!)
+            return false
+        }
+        return true
+    }
 
+    override fun createCode(): Pair<String, Schema> {
+        if (checkInputs()) {
+            val result = Url()
+            result.url = editText2.text.toString()
+            if(btnToUnfocus == btn0){
+                result.url = "twitter.com/${editText2.text}"
+            }
+            return Pair(result.generateString(), result)
+        }
+        return Pair("", Url())
+    }
     override fun onClick(btn: View?) {
         if (btn != null) {
 
             when (btn.id) {
                 R.id.btn0 -> {
                     setFocus(btn0)
+                    btnToUnfocus = btn0
+
                 }
                 R.id.btn1 -> {
                     setFocus(btn1)
+                    btnToUnfocus = btn1
                 }
             }
         }

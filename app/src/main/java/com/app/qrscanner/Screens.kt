@@ -108,15 +108,14 @@ object Screens {
         override fun getFragment() = CreateCalendarCodeFragment()
     }
 
-
-    class ShowCreatedQRScreen(private val value: String, private val result: SerializableResult) :
+    class ShowCreatedQRScreen(private val value: String) :
         SupportAppScreen() {
-        override fun getFragment() = ShowCreatedCodeFragment.create(value, result)
+        override fun getFragment() = ShowCreatedCodeFragment.create(value)
     }
 
-    class ShowScannedQRScreen(private val result: SerializableResult) :
+    object ShowScannedQRScreen :
         SupportAppScreen() {
-        override fun getFragment() = ShowScannedCodeFragment.create(result)
+        override fun getFragment() = ShowScannedCodeFragment()
     }
 
     object SettingsScreen : SupportAppScreen() {

@@ -40,7 +40,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
     <EditText
-        android:id="@+id/phoneInput"
+        android:id="@+id/artistInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:outlineAmbientShadowColor="@color/colorPrimaryDark"
@@ -59,10 +59,10 @@
         android:textColor="@color/app_lighttext"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneInput" />
+        app:layout_constraintTop_toBottomOf="@+id/artistInput" />
 
     <EditText
-        android:id="@+id/emailInput"
+        android:id="@+id/songInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:outlineAmbientShadowColor="@color/colorPrimaryDark"

@@ -50,6 +50,7 @@
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="36dp"
+        android:visibility="gone"
         android:layout_height="36dp"
         android:padding="8dp"
         android:src="@drawable/expand"
@@ -64,6 +65,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
+        android:visibility="gone"
         android:src="@drawable/horizontal_line"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -11,7 +11,6 @@ import com.app.qrscanner.Screens
 import com.app.qrscanner.domain.entities.Code
 import com.app.qrscanner.domain.entities.CodeStatus
 import com.app.qrscanner.domain.entities.CodeType
-import com.app.qrscanner.domain.entities.SerializableResult
 import com.app.qrscanner.domain.interactors.DatabaseInteractor
 import com.app.qrscanner.presentation.ContainerActivity
 import com.app.qrscanner.presentation.global.BaseFragment
@@ -40,15 +39,8 @@ class CreateCodeFragment : BaseFragment() {
                             status = CodeStatus.CREATED
                         )
                     )
-                    println(   Code(
-                        data = it.toString(),
-                        status = CodeStatus.CREATED
-                    ))
                     router.navigateTo(
-                        Screens.ShowCreatedQRScreen(
-                            editText.text.toString(),
-                            SerializableResult()
-                        )
+                        Screens.ShowCreatedQRScreen(editText.text.toString())
                     )
                 }
             }
@@ -67,29 +59,35 @@ class CreateCodeFragment : BaseFragment() {
 
     private fun initRecycler() {
         codesTypesAdapter =
-            CodeTypesAdapter(CodeType.values().toList().filter { (it != CodeType.URI && it != CodeType.VIN && it != CodeType.GEO)}, object : onCodeCreateClickListener{
-                override fun onClick(codeType: CodeType) {
-                    changeToolbar(false)
-                        when(codeType){
-                            CodeType.WIFI -> router.navigateTo(Screens.CreateWifiQrScreen)
-                            CodeType.FACEBOOK -> router.navigateTo(Screens.CreateFacebookQrScreen)
-                            CodeType.WHATSAPP -> router.navigateTo(Screens.CreateWhatsAppQrScreen)
-                            CodeType.SPOTIFY -> router.navigateTo(Screens.CreateSpotifyQrScreen)
-                            CodeType.YOUTUBE -> router.navigateTo(Screens.CreateYoutubeQrScreen)
-                            CodeType.PAYPAL -> router.navigateTo(Screens.CreatePaypalQrScreen)
-                            CodeType.CARD -> router.navigateTo(Screens.CreateCardQrScreen)
-                            CodeType.VIBER -> router.navigateTo(Screens.CreateViberQrScreen)
-                            CodeType.INSTAGRAM -> router.navigateTo(Screens.CreateInstagramQrScreen)
-                            CodeType.TWITTER -> router.navigateTo(Screens.CreateTwitterQrScreen)
-                            CodeType.TEXT -> router.navigateTo(Screens.CreateTextQrScreen)
-                            CodeType.CALENDAR -> router.navigateTo(Screens.CreateContactQrScreen)
-                            CodeType.TEL -> router.navigateTo(Screens.CreatePhoneQrScreen)
-                            CodeType.SMS -> router.navigateTo(Screens.CreateSmsQrScreen)
-                            CodeType.EMAIL_ADDRESS -> router.navigateTo(Screens.CreateMailQrScreen)
-                            CodeType.ADDRESSBOOK -> router.navigateTo(Screens.CreateContactQrScreen)
-                        }
-                }
-            })
+            CodeTypesAdapter(
+                CodeType.values().toList()
+                    .filter { (it != CodeType.URI && it != CodeType.VIN && it != CodeType.GEO) },
+                object : onCodeCreateClickListener {
+                    override fun onClick(codeType: CodeType) {
+                        changeToolbar(false)
+                        router.navigateTo(
+                            when (codeType) {
+                                CodeType.WIFI -> Screens.CreateWifiQrScreen
+                                CodeType.FACEBOOK -> Screens.CreateFacebookQrScreen
+                                CodeType.WHATSAPP -> Screens.CreateWhatsAppQrScreen
+                                CodeType.SPOTIFY -> Screens.CreateSpotifyQrScreen
+                                CodeType.YOUTUBE -> Screens.CreateYoutubeQrScreen
+                                CodeType.PAYPAL -> Screens.CreatePaypalQrScreen
+                                CodeType.CARD -> Screens.CreateCardQrScreen
+                                CodeType.VIBER -> Screens.CreateViberQrScreen
+                                CodeType.INSTAGRAM -> Screens.CreateInstagramQrScreen
+                                CodeType.TWITTER -> Screens.CreateTwitterQrScreen
+                                CodeType.TEXT -> Screens.CreateTextQrScreen
+                                CodeType.CALENDAR -> Screens.CreateCalendarQrScreen
+                                CodeType.TEL -> Screens.CreatePhoneQrScreen
+                                CodeType.SMS -> Screens.CreateSmsQrScreen
+                                CodeType.EMAIL_ADDRESS -> Screens.CreateMailQrScreen
+                                CodeType.ADDRESSBOOK -> Screens.CreateContactQrScreen
+                                else -> Screens.CreateInstagramQrScreen
+                            }
+                        )
+                    }
+                })
         gridLayoutManager = GridLayoutManager(context, 3)
         recyclerView.layoutManager = gridLayoutManager
         recyclerView.adapter = codesTypesAdapter
@@ -101,7 +99,7 @@ class CreateCodeFragment : BaseFragment() {
     }
 
     private fun changeToolbar(entered: Boolean) {
-        if(entered) {
+        if (entered) {
             with(ContainerActivity) {
                 setAppBatTitle("", activity)
                 changeSettingButtonVisibility(activity, View.VISIBLE)
@@ -110,8 +108,7 @@ class CreateCodeFragment : BaseFragment() {
                 changeBackButtonVisibility(activity, View.VISIBLE)
                 changeCreateQrButtonVisibility(activity, View.GONE)
             }
-        }
-        else {
+        } else {
             with(ContainerActivity) {
                 setAppBatTitle("", activity)
                 changeSettingButtonVisibility(activity, View.GONE)
@@ -129,6 +126,7 @@ class CreateCodeFragment : BaseFragment() {
         initRecycler()
     }
 }
-interface onCodeCreateClickListener{
+
+interface onCodeCreateClickListener {
     fun onClick(codeType: CodeType)
 }

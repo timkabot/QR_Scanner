@@ -7,9 +7,14 @@ import android.widget.Button
 import androidx.core.content.ContextCompat
 import com.app.qrscanner.R
 import com.app.qrscanner.presentation.global.BaseFragment
+import com.app.qrscanner.presentation.global.CreateCodeBaseFragment
+import com.app.qrscanner.utils.showToast
 import kotlinx.android.synthetic.main.fragment_create_youtube_code.*
+import net.glxn.qrgen.core.scheme.Schema
+import net.glxn.qrgen.core.scheme.Url
+import net.glxn.qrgen.core.scheme.YouTube
 
-class CreateYoutubeCodeFragment : BaseFragment(), View.OnClickListener {
+class CreateYoutubeCodeFragment : CreateCodeBaseFragment(), View.OnClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initButtons()
@@ -26,6 +31,25 @@ class CreateYoutubeCodeFragment : BaseFragment(), View.OnClickListener {
         btnToUnfocus = btn0
 
     }
+    private fun checkInputs(): Boolean {
+        if (editText2.text.isEmpty()) {
+            "Введите текст".showToast(context!!)
+            return false
+        }
+        return true
+    }
+
+    override fun createCode(): Pair<String, Schema> {
+        if (checkInputs()) {
+            val result = Url()
+            if(btnToUnfocus == btn0) result.url = editText2.text.toString()
+            if(btnToUnfocus == btn1) result.url = "http://www.youtube.com/watch?v=:${editText2.text}"
+            if(btnToUnfocus == btn2)result.url = "https://www.youtube.com/channel/${editText2.text}"
+
+            return Pair(result.generateString(), result)
+        }
+        return Pair("", Url())
+    }
 
     override fun onClick(btn: View?) {
         if (btn != null) {
@@ -33,12 +57,16 @@ class CreateYoutubeCodeFragment : BaseFragment(), View.OnClickListener {
             when (btn.id) {
                 R.id.btn0 -> {
                     setFocus(btn0)
+                    editText2.hint = "Введите ссылку Youtube"
                 }
                 R.id.btn1 -> {
                     setFocus(btn1)
+                    editText2.hint = "Введите id видео"
+
                 }
                 R.id.btn2 -> {
                     setFocus(btn2)
+                    editText2.hint = "Введите id канала"
                 }
             }
         }
