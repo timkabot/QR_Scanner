@@ -1,7 +1,9 @@
 package com.app.qrscanner.presentation.settings
 
+import android.content.Intent
 import android.graphics.LinearGradient
 import android.graphics.Shader.TileMode
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import com.app.qrscanner.R
@@ -56,8 +58,33 @@ class SettingsFragment : BaseFragment() {
         soundSwitch.setOnCheckedChangeListener { _, isChecked ->
             SettingsLocal.beep = isChecked
         }
-    }
 
+        rateUsText.setOnClickListener {
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=vk")))
+            } catch (e: Exception) {
+            }
+        }
+        shareText.setOnClickListener {
+            share()
+        }
+
+
+    }
+    private fun share()
+    {
+        /* ACTION_SEND: Deliver some data to someone else.
+         createChooser (Intent target, CharSequence title): Here, target- The Intent that the user will be selecting an activity to perform.
+             title- Optional title that will be displayed in the chooser.
+         Intent.EXTRA_TEXT: A constant CharSequence that is associated with the Intent, used with ACTION_SEND to supply the literal data to be sent.
+         */
+        val sendIntent = Intent();
+        sendIntent.action = Intent.ACTION_SEND;
+        sendIntent.putExtra(Intent.EXTRA_TEXT,"https://play.google.com/store/apps/details?id=qrcode.reader.qrscanner.barcode.scanner.qrcodereader");
+        sendIntent.setType("text/plain");
+        Intent.createChooser(sendIntent,"Share via");
+        startActivity(sendIntent);
+    }
     private fun setGradientForTextViews() {
         val shader = LinearGradient(
             0f,
