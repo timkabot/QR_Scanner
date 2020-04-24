@@ -1,75 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scroll"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="16dp"
+    android:layout_height="match_parent">
 
-    android:layout_marginHorizontal="16dp"
-    android:background="@color/background">
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="@dimen/big_icon_size"
-        android:layout_height="@dimen/big_icon_size"
-        android:layout_marginTop="24dp"
-        android:src="@drawable/sms"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="СМС"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-
-
-    <TextView
-        android:id="@+id/phoneNumberTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Номер телефона"
-        android:textColor="@color/app_lighttext"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <EditText
-        android:id="@+id/phoneInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:drawableEnd="@drawable/contact_import_drawable"
-        android:outlineAmbientShadowColor="@color/colorPrimaryDark"
-        android:outlineSpotShadowColor="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneNumberTextView" />
-
-    <TextView
-        android:id="@+id/contentTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Контент"
-        android:textColor="@color/app_lighttext"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneInput" />
-
-    <EditText
-        android:id="@+id/contentInput"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@null"
-        android:gravity="top"
-        android:hint="Введите текст"
-        android:inputType="text|textMultiLine"
-        android:minHeight="150dp"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contentTextView" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_margin="16dp"
+
+        android:layout_marginHorizontal="16dp"
+        android:background="@color/background">
+
+        <ImageView
+            android:id="@+id/containerIcon"
+            android:layout_width="@dimen/icon_container"
+            android:layout_height="@dimen/icon_container"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/container_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="@dimen/big_icon_size"
+            android:layout_height="@dimen/big_icon_size"
+            android:foregroundGravity="center"
+            android:scaleType="centerInside"
+            android:src="@drawable/sms"
+            app:layout_constraintBottom_toBottomOf="@id/containerIcon"
+            app:layout_constraintEnd_toEndOf="@id/containerIcon"
+            app:layout_constraintStart_toStartOf="@id/containerIcon"
+            app:layout_constraintTop_toTopOf="@id/containerIcon" />
+
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/sms"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/containerIcon" />
+
+
+        <TextView
+            android:id="@+id/phoneNumberTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/phone_number"
+            android:textColor="@color/app_lighttext"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <com.mindorks.editdrawabletext.EditDrawableText
+            android:id="@+id/phoneInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/contact_import_drawable"
+            android:inputType="number"
+            android:outlineAmbientShadowColor="@color/colorPrimaryDark"
+            android:outlineSpotShadowColor="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phoneNumberTextView" />
+
+
+        <TextView
+            android:id="@+id/contentTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/content"
+            android:textColor="@color/app_lighttext"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phoneInput" />
+
+        <EditText
+            android:id="@+id/contentInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="@string/enter_text"
+            android:inputType="text|textMultiLine"
+            android:minHeight="150dp"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contentTextView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

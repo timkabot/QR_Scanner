@@ -28,7 +28,7 @@ class CreateCalendarCodeFragment : CreateCodeBaseFragment() {
             locationInput.text.isEmpty() &&
             descriptionInput.text.isEmpty()
         ) {
-            "Введите текст".showToast(context!!)
+            getString(R.string.enter_text).showToast(context!!)
             return false
         }
         return true

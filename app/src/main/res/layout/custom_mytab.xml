@@ -10,10 +10,10 @@
         android:id="@+id/imageInTab"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="8dp"
+        android:layout_gravity="center"
 
-        android:scaleType="fitXY"
-        android:layout_gravity="center" />
+        android:layout_marginTop="8dp"
+        android:scaleType="fitXY" />
 
     <com.veeyaar.supergradienttextview.GradientTextView
         android:id="@+id/gradientTextTab"
@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="2dp"
-        android:text="Hello world"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold"

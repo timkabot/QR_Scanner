@@ -30,7 +30,7 @@ class CreateFacebookCodeFragment : CreateCodeBaseFragment(), View.OnClickListene
 
     private fun checkInputs(): Boolean {
         if (editText2.text.isEmpty()) {
-            "Введите информацию".showToast(context!!)
+            getString(R.string.enter_information).showToast(context!!)
             return false
         }
         return true
@@ -51,13 +51,13 @@ class CreateFacebookCodeFragment : CreateCodeBaseFragment(), View.OnClickListene
             when (btn.id) {
                 R.id.btn0 -> {
                     setFocus(btn0)
-                    editText2.hint = "Введите Facebook ID"
+                    editText2.hint = getString(R.string.enter_facebook_id)
                     btnToUnfocus = btn0
 
                 }
                 R.id.btn1 -> {
                     setFocus(btn1)
-                    editText2.hint = "Введите Facebook URL"
+                    editText2.hint = getString(R.string.enter_facebook_url)
                     btnToUnfocus = btn1
 
                 }

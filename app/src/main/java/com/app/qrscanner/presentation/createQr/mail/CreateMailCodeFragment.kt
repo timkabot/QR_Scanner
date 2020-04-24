@@ -18,7 +18,7 @@ class CreateMailCodeFragment : CreateCodeBaseFragment(){
             subjectInput.text.isEmpty() &&
             contentInput.text.isEmpty()
         ) {
-            "Введите информацию".showToast(context!!)
+            getString(R.string.enter_information).showToast(context!!)
             return false
         }
         return true

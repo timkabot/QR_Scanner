@@ -100,7 +100,7 @@ class ScanQrFragment : BaseFragment(), MyZxing.ResultHandler {
 
     private fun setScannerProperties() {
         qrCodeScanner.setAutoFocus(true)
-        qrCodeScanner.setBorderLineLength(200)
+        qrCodeScanner.setBorderLineLength(250)
         qrCodeScanner.setBorderStrokeWidth(10)
         qrCodeScanner.setMaskColor(getColor(context!!,R.color.semi_transparent))
         qrCodeScanner.setSquareViewFinder(false)

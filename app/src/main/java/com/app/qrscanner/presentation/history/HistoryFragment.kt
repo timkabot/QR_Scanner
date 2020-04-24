@@ -25,7 +25,6 @@ class HistoryFragment : BaseFragment() {
         viewPagerAdapter = ViewPagerAdapter(this)
         viewpager.adapter = viewPagerAdapter
 
-
         TabLayoutMediator(tabLayout, viewpager) { tab, position ->
             when (position) {
                 0 -> {

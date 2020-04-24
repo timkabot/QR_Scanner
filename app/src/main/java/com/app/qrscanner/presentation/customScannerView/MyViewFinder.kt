@@ -149,26 +149,26 @@ class MyViewFinder : View, IViewFinder {
             0.0f,
             0.0f,
             width.toFloat(),
-            framingRect.top.toFloat(),
+            framingRect.top.toFloat() + 15,
             mFinderMaskPaint!!
         )
         canvas.drawRect(
             0.0f,
-            framingRect.top.toFloat(),
-            framingRect.left.toFloat(),
-            (framingRect.bottom + 1).toFloat(),
+            framingRect.top.toFloat() + 15,
+            framingRect.left.toFloat()+15,
+            (framingRect.bottom ).toFloat() - 15,
             mFinderMaskPaint!!
         )
         canvas.drawRect(
-            (framingRect.right + 1).toFloat(),
-            framingRect.top.toFloat(),
+            (framingRect.right -15).toFloat(),
+            framingRect.top.toFloat() + 15,
             width.toFloat(),
-            (framingRect.bottom + 1).toFloat(),
+            (framingRect.bottom ).toFloat() - 15,
             mFinderMaskPaint!!
         )
         canvas.drawRect(
             0.0f,
-            (framingRect.bottom + 1).toFloat(),
+            (framingRect.bottom -15).toFloat(),
             width.toFloat(),
             height.toFloat(),
             mFinderMaskPaint!!
@@ -265,7 +265,7 @@ class MyViewFinder : View, IViewFinder {
         val orientation = DisplayUtils.getScreenOrientation(this.context)
         var width: Int
         var height: Int
-        val heightOffset = 0.9f
+        val heightOffset = 1f
         if (mSquareViewFinder) {
             if (orientation != 1) {
                 height = (this.height.toFloat() * heightOffset).toInt()

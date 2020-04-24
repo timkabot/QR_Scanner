@@ -13,7 +13,7 @@ class CreateSpotifyCodeFragment : CreateCodeBaseFragment() {
 
     private fun checkInputs(): Boolean {
         if (artistInput.text.isEmpty() && songInput.text.isEmpty()) {
-            "Введите информацию".showToast(context!!)
+            getString(R.string.enter_information).showToast(context!!)
             return false
         }
         return true
@@ -21,9 +21,7 @@ class CreateSpotifyCodeFragment : CreateCodeBaseFragment() {
 
     override fun createCode(): Pair<String, Schema> {
         if (checkInputs()) {
-            val result = Url()
-            result.url = "spotify:${artistInput.text}:spotify:track:${songInput.text}/"
-            return Pair(result.generateString(), result)
+            return Pair("spotify:${artistInput.text}:spotify:track:${songInput.text}/", Url())
         }
         return Pair("", Url())
     }

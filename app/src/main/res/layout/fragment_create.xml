@@ -9,13 +9,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/containerWhite"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/container_white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -23,9 +22,8 @@
             android:id="@+id/webSiteTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
+            android:layout_marginStart="16dp"
             android:text="@string/url"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -34,16 +32,14 @@
 
         <EditText
             android:id="@+id/editText"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="15dp"
             android:background="@null"
-            android:hint="Введите или вставьте url адрес или текст"
+            android:hint="@string/enter_url_or_text"
             android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/webSiteTextView"
             app:layout_constraintTop_toBottomOf="@+id/webSiteTextView" />
 
         <LinearLayout
@@ -55,7 +51,8 @@
             android:orientation="horizontal"
             android:weightSum="2"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/editText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editText">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -104,7 +101,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            >
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -114,7 +110,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

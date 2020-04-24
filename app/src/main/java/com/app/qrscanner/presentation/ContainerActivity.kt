@@ -30,6 +30,7 @@ import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import ru.terrakok.cicerone.commands.Command
+import java.lang.Exception
 
 
 class ContainerActivity : AppCompatActivity() {
@@ -40,6 +41,22 @@ class ContainerActivity : AppCompatActivity() {
     private val codeTypeInteractor by inject<CodeTypeInteractor>()
     private val mainVM: MainViewModel by viewModel()
     private lateinit var mInterstitialAd: InterstitialAd
+    private val adSize: AdSize
+        get() {
+            val display = windowManager.defaultDisplay
+            val outMetrics = DisplayMetrics()
+            display.getMetrics(outMetrics)
+
+            val density = outMetrics.density
+
+            var adWidthPixels = adViewContainer.width.toFloat()
+            if (adWidthPixels == 0f) {
+                adWidthPixels = outMetrics.widthPixels.toFloat()
+            }
+
+            val adWidth = (adWidthPixels / density).toInt()
+            return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth)
+        }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,7 +86,7 @@ class ContainerActivity : AppCompatActivity() {
                     mainVM.goToScreen(Screens.ShowCreatedQRScreen(result))
 
                     var codeType = codeTypeInteractor.getCodeTypeForSchema(schema)
-                    if(codeType == CodeType.URI) codeType =codeTypeInteractor.getSiteType(result)
+                    if(codeType == CodeType.URI) codeType = codeTypeInteractor.getSiteType(result)
 
                     println("Trying to save \n ${result}")
                     databaseInteractor.saveCodeInDatabase(
@@ -114,13 +131,19 @@ class ContainerActivity : AppCompatActivity() {
         }
 
     private fun initAds(){
+        val adView = AdView(this)
+        adViewContainer.addView(adView)
+
+        adView.adUnitId = "ca-app-pub-3940256099942544/6300978111"
+        adView.adSize = adSize
+
         //bannerAd
-        adView.loadAd(AdRequest.Builder().addTestDevice("4E6DEAA92CE1C5B77ABD737D7732711B").build())
+        adView.loadAd(AdRequest.Builder().build())
 
         //interstitial ad
         mInterstitialAd = InterstitialAd(this).apply {
             adUnitId = "ca-app-pub-3940256099942544/1033173712"
-            loadAd(AdRequest.Builder().addTestDevice("4E6DEAA92CE1C5B77ABD737D7732711B").build())
+            loadAd(AdRequest.Builder().build())
             adListener = object : AdListener() {
                 override fun onAdClosed() {
                     mInterstitialAd.loadAd(AdRequest.Builder().build())
@@ -139,6 +162,7 @@ class ContainerActivity : AppCompatActivity() {
     private fun setupNavigationBar() {
         fab.setOnClickListener {
             mainVM.goToScreen(Screens.ScanQRScreen)
+            bottomNavigationView.selectedItemId = R.id.nagivation_readBarcode
         }
         //bottomNavigationView.itemTextColor = R.drawable.gradient_background
         //bottomNavigationView.itemIconTintList = null

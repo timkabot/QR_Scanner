@@ -67,7 +67,7 @@ class ShowScannedCodeFragment : BaseFragment() {
 
         copyButton.setOnClickListener {
             mainVM.androidServicesInteractor.copyToClipBoard(codeContentTextView.text.toString(), activity as Activity)
-            "Успешно скопировано в буфер обмена".showToast(context!!)
+            getString(R.string.succesfully_copied_to_clipboard).showToast(context!!)
         }
 
     }
@@ -123,6 +123,13 @@ class ShowScannedCodeFragment : BaseFragment() {
         val info = mainVM.parsedResultInteractor.getInfoForCalendar(calendar)
         setContent(info)
         calendarLayout.visibility = View.VISIBLE
+
+        calendarAddEventButton.setOnClickListener {
+            mainVM.androidServicesInteractor.addCalendar(calendar)
+        }
+        calendarSendEmail.setOnClickListener {
+            mainVM.androidServicesInteractor.sendEmail(text = info)
+        }
     }
 
     private fun initSms(sms: SMSParsedResult) {
@@ -197,6 +204,16 @@ class ShowScannedCodeFragment : BaseFragment() {
         emailAddToContactsButton.setOnClickListener {
             val contact = Contact(email = email.tos?.get(0))
             mainVM.androidServicesInteractor.addToContacts(contact)
+        }
+
+        emailSendEmailButton.setOnClickListener {
+            var recipient = email.tos?.get(0)
+            if(recipient == null) recipient = ""
+            mainVM.androidServicesInteractor.sendEmail(recipient = recipient, subject = email.subject, text = email.body)
+        }
+
+        emailShareButton.setOnClickListener {
+            mainVM.androidServicesInteractor.shareText(info)
         }
     }
 

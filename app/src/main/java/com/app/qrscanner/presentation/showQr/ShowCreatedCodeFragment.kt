@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -51,17 +52,15 @@ class ShowCreatedCodeFragment : BaseFragment() {
         initListeners()
         initAds()
     }
-    private fun initText(){
 
-    }
     override fun onResume() {
         super.onResume()
-        activity!!.findViewById<AdView>(R.id.adView).visibility = View.GONE
+        activity!!.findViewById<FrameLayout>(R.id.adViewContainer).visibility = View.GONE
     }
 
     override fun onPause() {
         super.onPause()
-        activity!!.findViewById<AdView>(R.id.adView).visibility = View.VISIBLE
+        activity!!.findViewById<FrameLayout>(R.id.adViewContainer).visibility = View.VISIBLE
 
     }
     private fun initAds() {

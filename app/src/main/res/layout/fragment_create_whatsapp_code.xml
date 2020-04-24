@@ -1,69 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="16dp"
-    android:background="@color/background">
+    android:layout_height="match_parent">
 
-
-    <ImageView
-        android:id="@+id/dsad"
-        android:layout_width="@dimen/big_icon_size"
-        android:layout_height="@dimen/big_icon_size"
-        android:layout_marginTop="24dp"
-        android:src="@drawable/whatsapp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/whatsAppTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Whatsapp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dsad" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center_vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/whatsAppTextView">
+        android:layout_margin="16dp"
+        android:background="@color/background">
 
-        <com.hbb20.CountryCodePicker
-            android:id="@+id/ccp"
+
+        <ImageView
+            android:id="@+id/containerIcon"
+            android:layout_width="@dimen/icon_container"
+            android:layout_height="@dimen/icon_container"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/container_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="@dimen/big_icon_size"
+            android:layout_height="@dimen/big_icon_size"
+            android:foregroundGravity="center"
+            android:scaleType="centerInside"
+            android:src="@drawable/whatsapp"
+            app:layout_constraintBottom_toBottomOf="@id/containerIcon"
+            app:layout_constraintEnd_toEndOf="@id/containerIcon"
+            app:layout_constraintStart_toStartOf="@id/containerIcon"
+            app:layout_constraintTop_toTopOf="@id/containerIcon" />
+
+
+        <TextView
+            android:id="@+id/whatsAppTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:ccp_countryPreference="RU"
-            app:ccp_textSize="12sp" />
+            android:layout_marginTop="8dp"
+            android:text="@string/whatsapp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/containerIcon" />
 
-        <EditText
-            android:id="@+id/editTextCarrierNumber"
+        <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:editable="false"
-            android:hint="Номер телефона"
-            android:inputType="phone"
-            android:singleLine="true"
-            android:textSize="12sp"
-            app:layout_constraintTop_toBottomOf="@+id/facebookTextView"
-            tools:layout_editor_absoluteX="25dp" />
-    </LinearLayout>
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/whatsAppTextView">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Другие пользователи смогут связаться с вами после сканирования QR кода который вы создадите"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/ccp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:ccp_countryPreference="RU"
+                app:ccp_textSize="12sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <EditText
+                android:id="@+id/editTextCarrierNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:hint="@string/phone_number"
+                android:inputType="phone"
+                android:singleLine="true"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@+id/facebookTextView"
+                tools:layout_editor_absoluteX="25dp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/other_users_might_contact_you_after_scanning_your_qr"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

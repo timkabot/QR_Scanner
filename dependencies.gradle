@@ -48,7 +48,8 @@ ext {
 
     libs = [
             cicerone : 'ru.terrakok.cicerone:cicerone:5.0.0',
-            timber : 'com.jakewharton.timber:timber:4.7.1'
+            timber : 'com.jakewharton.timber:timber:4.7.1',
+            localeChanger : 'com.github.franmontiel:LocaleChanger:0.9.2'
     ]
 
 

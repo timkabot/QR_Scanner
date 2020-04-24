@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/my_template"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,7 +18,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
             android:background="@color/background">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +27,6 @@
                 android:layout_margin="16dp"
                 android:background="@drawable/container_white"
                 android:paddingBottom="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -42,7 +40,7 @@
                     android:gravity="center"
                     android:paddingHorizontal="48dp"
                     android:paddingVertical="12dp"
-                    android:text="Копировать"
+                    android:text="@string/copy"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
@@ -50,32 +48,44 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/codeContentTextView" />
 
-                <ImageView
-                    android:id="@+id/codeTypeImage"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                <LinearLayout
+                    android:id="@+id/imageContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="128dp"
-                    android:src="@drawable/url"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                </ImageView>
+                    <ImageView
+                        android:id="@+id/codeTypeImage"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center_vertical"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/url"
 
-                <TextView
-                    android:id="@+id/codeTypeTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="16dp"
-                    android:text="URL"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/codeTypeImage"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/codeTypeImage"
-                    app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/codeTypeTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginHorizontal="4dp"
+                        android:gravity="center_vertical"
+                        android:text="URL"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/codeTypeImage"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/codeTypeImage"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/codeContentTextView"
@@ -84,11 +94,10 @@
                     android:layout_marginTop="16dp"
                     android:gravity="center_horizontal"
                     android:paddingHorizontal="16dp"
-                    android:text="Name: Leo BENKEL \n Tel 415 444 6814 \n Email: leo_benkel@gmail.com"
                     android:textColor="@android:color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/codeTypeImage" />
+                    app:layout_constraintTop_toBottomOf="@+id/imageContainer" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -185,7 +194,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Поиск в google"
+                                    android:text="@string/find_in_google"
                                     android:textSize="12sp" />
 
                                 <TextView
@@ -193,7 +202,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Поделиться"
+                                    android:text="@string/share"
                                     android:textSize="12sp" />
                             </LinearLayout>
                         </LinearLayout>
@@ -283,7 +292,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Добавить событие в календарь"
+                                    android:text="@string/add_calendar_event"
                                     android:textSize="12sp" />
 
                                 <TextView
@@ -291,7 +300,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Отправить по email"
+                                    android:text="@string/send_by_email"
                                     android:textSize="12sp" />
                             </LinearLayout>
                         </LinearLayout>
@@ -382,7 +391,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Показать на карте"
+                                    android:text="@string/show_on_map"
                                     android:textSize="12sp" />
 
                                 <TextView
@@ -390,7 +399,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Поделиться"
+                                    android:text="@string/share"
                                     android:textSize="12sp" />
                             </LinearLayout>
                         </LinearLayout>
@@ -480,7 +489,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Отправить SMS"
+                                    android:text="@string/send_by_sms"
                                     android:textSize="12sp" />
 
                                 <TextView
@@ -488,7 +497,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Отправить email"
+                                    android:text="@string/send_by_email"
                                     android:textSize="12sp" />
                             </LinearLayout>
                         </LinearLayout>
@@ -578,7 +587,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Присоединиться к сети"
+                                    android:text="@string/join_the_network"
                                     android:textSize="12sp" />
 
                                 <TextView
@@ -586,7 +595,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Поделиться"
+                                    android:text="@string/share"
                                     android:textSize="12sp" />
                             </LinearLayout>
                         </LinearLayout>
@@ -676,7 +685,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Позвонить"
+                                    android:text="@string/call"
                                     android:textSize="12sp" />
 
                                 <TextView
@@ -684,7 +693,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Добавить контакт"
+                                    android:text="@string/add_contact"
                                     android:textSize="12sp" />
                             </LinearLayout>
                         </LinearLayout>
@@ -720,14 +729,14 @@
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
                                     android:orientation="vertical"
-                                    android:paddingHorizontal="14dp">
+                                    android:paddingLeft="34dp"
+                                    android:paddingRight="12dp">
 
                                     <androidx.appcompat.widget.AppCompatButton
                                         android:id="@+id/urlOpenInBrowserButton"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center_horizontal"
-                                        android:layout_marginHorizontal="36dp"
                                         android:background="@drawable/open_in_browser_button"
                                         android:paddingTop="0dp"
                                         android:textColor="@color/colorPrimary" />
@@ -741,13 +750,13 @@
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
                                     android:orientation="vertical"
-                                    android:paddingHorizontal="14dp">
+                                    android:paddingLeft="34dp"
+                                    android:paddingRight="12dp">
 
                                     <androidx.appcompat.widget.AppCompatButton
                                         android:id="@+id/urlShareButton"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginHorizontal="36dp"
                                         android:background="@drawable/share_button"
                                         android:paddingTop="0dp"
                                         android:textColor="@color/colorPrimary" />
@@ -779,7 +788,7 @@
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Поделиться"
+                                    android:text="@string/share"
                                     android:textSize="12sp" />
                             </LinearLayout>
 
@@ -889,7 +898,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Добавить в контакты"
+                                    android:text="@string/add_to_contacts"
                                     android:textSize="12sp" />
 
                                 <TextView
@@ -897,7 +906,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Позвонить"
+                                    android:text="@string/call"
                                     android:textSize="12sp" />
 
                                 <TextView
@@ -905,7 +914,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Показать на карте"
+                                    android:text="@string/show_on_map"
                                     android:textSize="12sp" />
                             </LinearLayout>
                         </LinearLayout>
@@ -995,7 +1004,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Отправить sms"
+                                    android:text="@string/send_by_sms"
                                     android:textSize="12sp" />
 
                                 <TextView
@@ -1003,7 +1012,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Позвонить"
+                                    android:text="@string/call"
                                     android:textSize="12sp" />
                             </LinearLayout>
                         </LinearLayout>
@@ -1111,7 +1120,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Отправить email"
+                                    android:text="@string/send_by_email"
                                     android:textSize="12sp" />
 
                                 <TextView
@@ -1119,7 +1128,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Добавить в контакты"
+                                    android:text="@string/add_to_contacts"
                                     android:textSize="12sp" />
 
                                 <TextView
@@ -1127,7 +1136,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="Поделиться"
+                                    android:text="@string/share"
                                     android:textSize="12sp" />
                             </LinearLayout>
                         </LinearLayout>
@@ -1136,16 +1145,16 @@
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+            <com.google.android.ads.nativetemplates.TemplateView
+                android:id="@+id/my_template"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:gnt_template_type="@layout/gnt_small_template_view"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
     <!--  This is your template view -->
-    <com.google.android.ads.nativetemplates.TemplateView
-        android:id="@+id/my_template"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:gnt_template_type="@layout/gnt_small_template_view"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

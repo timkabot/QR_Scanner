@@ -9,7 +9,7 @@ class ParsedResultInteractor(private val codeTypeInteractor: CodeTypeInteractor)
 
     fun getInfoForParsedResult(r: ParsedResult) : String{
        var res = ""
-       if(r is EmailAddressParsedResult) res = getInfoForEmail(r)
+        if(r is EmailAddressParsedResult) res = getInfoForEmail(r)
         if(r is AddressBookParsedResult) res = getInfoForAddressBook(r)
         if(r is WifiParsedResult) res = getInfoForWifi(r)
         if(r is URIParsedResult) res = getInfoForURI(r)
@@ -34,7 +34,7 @@ class ParsedResultInteractor(private val codeTypeInteractor: CodeTypeInteractor)
     fun getInfoForAddressBook(addressBook: AddressBookParsedResult): String {
         var info = ""
         with(addressBook) {
-            println(names)
+            println(addressBook.toString())
             whenNotNull(names) { if (names.isNotEmpty()) info += "Имя: ${names.contentToString()}\n" }
             whenNotNull(nicknames) { if (nicknames.isNotEmpty()  && nicknames[0]!= null) info += "Прозвище: ${nicknames.contentToString()}\n" }
             whenNotNull(pronunciation) { if (pronunciation.isNotEmpty()) info += "Произношение: ${pronunciation}\n" }
@@ -48,7 +48,7 @@ class ParsedResultInteractor(private val codeTypeInteractor: CodeTypeInteractor)
             whenNotNull(note) { if (note.isNotEmpty()) info += "Заметки: ${note}\n" }
             whenNotNull(birthday) { if (birthday.isNotEmpty()) info += "День рождения: ${birthday}\n" }
             whenNotNull(title) { if (title.isNotEmpty()) info += "Заголовок: ${title}\n" }
-
+            whenNotNull(org) { if (org.isNotEmpty()) info += "Организация: ${org}\n" }
             whenNotNull(addresses) { if (addresses.isNotEmpty()) info += "Адреса: ${addresses.contentToString()}\n" }
 
         }

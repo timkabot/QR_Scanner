@@ -18,6 +18,7 @@
         android:layout_height="12dp"
         android:tint="@color/app_text"
         android:src="@drawable/history_arrow"
+        android:layout_marginHorizontal="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -54,11 +55,10 @@
             android:id="@+id/codeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:text="youtube.com/hello_world"
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -79,6 +79,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/codeTextView"
             app:layout_constraintVertical_bias="1.0"
-            tools:layout_editor_absoluteX="124dp" />
+            tools:layout_editor_absoluteX="124dp"
+            tools:ignore="HardcodedText" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

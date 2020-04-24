@@ -17,7 +17,7 @@ class CreateViberCodeFragment : CreateCodeBaseFragment(){
     }
     private fun checkInputs(): Boolean {
         if (editTextCarrierNumber.text.isEmpty()) {
-            "Введите текст".showToast(context!!)
+            getString(R.string.enter_text).showToast(context!!)
             return false
         }
         return true

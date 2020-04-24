@@ -45,6 +45,7 @@ class CodeTypeInteractor {
         else return SMS
     }
 
+
     fun getNameForCodeType(codeType: CodeType, context: Context) =
         with(context) {
             when (codeType) {
@@ -69,20 +70,20 @@ class CodeTypeInteractor {
         }
 
     fun getSiteType(link: String): CodeType {
-        with(link) {
+
+        with(link.toLowerCase()) {
             if (startsWith("instagram")) return INSTAGRAM
             if (startsWith("twitter")) return TWITTER
             if (startsWith("fb")) return FACEBOOK
+            if (startsWith("facebook")) return FACEBOOK
             if (startsWith("spotify")) return SPOTIFY
             if (startsWith("whatsapp")) return WHATSAPP
             if (startsWith("viber")) return VIBER
             if (startsWith("paypal")) return PAYPAL
-
         }
-
         try {
             val host = URL(link).host
-            host.toLowerCase(Locale.getDefault()).apply {
+            host.toLowerCase().apply {
                 if (contains("twitter")) return TWITTER
                 if (contains("instagram")) return INSTAGRAM
                 if (contains("youtube")) return YOUTUBE
@@ -92,9 +93,6 @@ class CodeTypeInteractor {
                 if (contains("whatsapp")) return WHATSAPP
                 if (contains("viber")) return VIBER
                 if (contains("paypal")) return PAYPAL
-
-
-
             }
         } catch (e: Exception) {
         }

@@ -30,7 +30,7 @@ class CreatePaypalCodeFragment : CreateCodeBaseFragment(), View.OnClickListener{
     }
     private fun checkInputs(): Boolean {
         if (editText2.text.isEmpty()) {
-            "Введите информацию".showToast(context!!)
+            getString(R.string.enter_information).showToast(context!!)
             return false
         }
         return true

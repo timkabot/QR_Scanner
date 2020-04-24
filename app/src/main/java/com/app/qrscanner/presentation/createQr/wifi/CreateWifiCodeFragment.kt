@@ -33,7 +33,7 @@ class CreateWifiCodeFragment : CreateCodeBaseFragment(), View.OnClickListener {
     private fun checkInputs(): Boolean {
         if (editText2.text.isEmpty() &&
             passwordInput.editText!!.text.isEmpty() ) {
-            "Введите текст".showToast(context!!)
+            getString(R.string.enter_text).showToast(context!!)
             return false
         }
         return true

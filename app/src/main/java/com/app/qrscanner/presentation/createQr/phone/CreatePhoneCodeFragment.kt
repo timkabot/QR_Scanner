@@ -60,7 +60,7 @@ class CreatePhoneCodeFragment : CreateCodeBaseFragment() {
 
     private fun checkInputs(): Boolean {
         if (phoneInput.text.isEmpty()) {
-            "Введите номер телефона".showToast(context!!)
+            getString(R.string.enter_phone_number).showToast(context!!)
             return false
         }
         return true
@@ -102,7 +102,7 @@ class CreatePhoneCodeFragment : CreateCodeBaseFragment() {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 openPickContactDialog()
             } else {
-                "Необходимо разрешение на чтение контактов для импорта".showToast(context!!)
+                getString(R.string.contacts_permission_required).showToast(context!!)
             }
         }
     }

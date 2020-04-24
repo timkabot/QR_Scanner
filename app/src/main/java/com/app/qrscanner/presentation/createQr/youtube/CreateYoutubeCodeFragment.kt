@@ -33,7 +33,7 @@ class CreateYoutubeCodeFragment : CreateCodeBaseFragment(), View.OnClickListener
     }
     private fun checkInputs(): Boolean {
         if (editText2.text.isEmpty()) {
-            "Введите текст".showToast(context!!)
+            getString(R.string.enter_text).showToast(context!!)
             return false
         }
         return true
@@ -57,16 +57,16 @@ class CreateYoutubeCodeFragment : CreateCodeBaseFragment(), View.OnClickListener
             when (btn.id) {
                 R.id.btn0 -> {
                     setFocus(btn0)
-                    editText2.hint = "Введите ссылку Youtube"
+                    editText2.hint = getString(R.string.enter_youtube_link)
                 }
                 R.id.btn1 -> {
                     setFocus(btn1)
-                    editText2.hint = "Введите id видео"
+                    editText2.hint = getString(R.string.enter_video_id)
 
                 }
                 R.id.btn2 -> {
                     setFocus(btn2)
-                    editText2.hint = "Введите id канала"
+                    editText2.hint = getString(R.string.enter_channel_id)
                 }
             }
         }

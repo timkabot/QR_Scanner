@@ -5,16 +5,20 @@ import android.content.*
 import android.graphics.Bitmap
 import android.net.Uri
 import android.net.wifi.WifiManager
+import android.provider.CalendarContract
 import android.provider.ContactsContract
 import android.provider.ContactsContract.Intents.Insert
 import android.provider.Settings
+import androidx.core.content.ContextCompat.startActivity
 import com.app.qrscanner.domain.entities.CodeType
 import com.app.qrscanner.domain.entities.Contact
 import com.app.qrscanner.utils.generateNotInstalledAppError
 import com.google.zxing.*
+import com.google.zxing.client.result.CalendarParsedResult
 import com.google.zxing.client.result.URIParsedResult
 import com.google.zxing.common.HybridBinarizer
 import java.util.*
+
 
 class AndroidServicesInteractor(private val context: Context) {
     fun copyToClipBoard(textToCopy: String, activity: Activity) {
@@ -45,6 +49,18 @@ class AndroidServicesInteractor(private val context: Context) {
             }
         }
         return rawResult
+    }
+    fun addCalendar(calendar: CalendarParsedResult) {
+        val beginTime = calendar.start
+        val endTime = calendar.end
+        val intent: Intent = Intent(Intent.ACTION_INSERT)
+            .setData(CalendarContract.Events.CONTENT_URI)
+            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.time)
+            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.time)
+            .putExtra(CalendarContract.Events.TITLE, calendar.summary)
+            .putExtra(CalendarContract.Events.DESCRIPTION, calendar.description)
+            .putExtra(CalendarContract.Events.EVENT_LOCATION,calendar.location)
+        context.startActivity(intent)
     }
     fun addToContacts(contact: Contact) {
         val contactIntent = Intent(Intent.ACTION_INSERT).apply {

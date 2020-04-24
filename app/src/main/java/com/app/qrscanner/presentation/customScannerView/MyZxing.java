@@ -34,7 +34,7 @@ public class MyZxing extends BarcodeScannerView {
     private MultiFormatReader mMultiFormatReader;
     public static final List<BarcodeFormat> ALL_FORMATS = new ArrayList();
     private List<BarcodeFormat> mFormats;
-    private MyZxing.ResultHandler mResultHandler;
+    MyZxing.ResultHandler mResultHandler;
 
     public MyViewFinder viewFinder;
     public MyZxing(Context context) {

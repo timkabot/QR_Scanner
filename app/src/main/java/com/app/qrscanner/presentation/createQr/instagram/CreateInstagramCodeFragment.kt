@@ -30,7 +30,7 @@ class CreateInstagramCodeFragment : CreateCodeBaseFragment(), View.OnClickListen
 
     private fun checkInputs(): Boolean {
         if (editText2.text.isEmpty()) {
-            "Введите информацию".showToast(context!!)
+            getString(R.string.enter_information).showToast(context!!)
             return false
         }
         return true
@@ -40,6 +40,7 @@ class CreateInstagramCodeFragment : CreateCodeBaseFragment(), View.OnClickListen
         if (checkInputs()) {
             val result = "instagram.com/${editText2.text}"
             if (btnToUnfocus == btn0) return Pair(result, Url())
+
             if (btnToUnfocus == btn1) return Pair(editText2.text.toString(), Url())
         }
         return Pair("", Url())
@@ -51,13 +52,13 @@ class CreateInstagramCodeFragment : CreateCodeBaseFragment(), View.OnClickListen
             when (btn.id) {
                 R.id.btn0 -> {
                     setFocus(btn0)
-                    editText2.hint = "Введите профиль Instagram"
+                    editText2.hint = getString(R.string.enter_instagram_profile)
 
                     btnToUnfocus = btn0
                 }
                 R.id.btn1 -> {
                     setFocus(btn1)
-                    editText2.hint = "Введите ссылку"
+                    editText2.hint = getString(R.string.enter_url)
 
                     btnToUnfocus = btn1
                 }

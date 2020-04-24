@@ -31,7 +31,7 @@ class CreateTwitterCodeFragment : CreateCodeBaseFragment(), View.OnClickListener
     }
     private fun checkInputs(): Boolean {
         if (editText2.text.isEmpty()) {
-            "Введите информацию".showToast(context!!)
+            getString(R.string.enter_information).showToast(context!!)
             return false
         }
         return true
@@ -39,12 +39,10 @@ class CreateTwitterCodeFragment : CreateCodeBaseFragment(), View.OnClickListener
 
     override fun createCode(): Pair<String, Schema> {
         if (checkInputs()) {
-            val result = Url()
-            result.url = editText2.text.toString()
             if(btnToUnfocus == btn0){
-                result.url = "twitter.com/${editText2.text}"
+                return Pair( "twitter.com/${editText2.text}", Url())
             }
-            return Pair(result.generateString(), result)
+            if(btnToUnfocus == btn1) return Pair(editText2.text.toString(), Url())
         }
         return Pair("", Url())
     }
@@ -55,11 +53,14 @@ class CreateTwitterCodeFragment : CreateCodeBaseFragment(), View.OnClickListener
                 R.id.btn0 -> {
                     setFocus(btn0)
                     btnToUnfocus = btn0
+                    editText2.hint = getString(R.string.enter_twitter_username)
 
                 }
                 R.id.btn1 -> {
                     setFocus(btn1)
                     btnToUnfocus = btn1
+                    editText2.hint = getString(R.string.enter_url)
+
                 }
             }
         }

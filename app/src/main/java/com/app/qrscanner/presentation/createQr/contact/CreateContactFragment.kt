@@ -67,7 +67,7 @@ class CreateContactFragment : CreateCodeBaseFragment() {
             phoneInput.text.isEmpty() &&
             emailInput.text.isEmpty()
         ) {
-            "Введите информацию".showToast(context!!)
+            getString(R.string.enter_information).showToast(context!!)
             return false
         }
         return true
@@ -125,7 +125,7 @@ class CreateContactFragment : CreateCodeBaseFragment() {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 openPickContactDialog()
             } else {
-                "Необходимо разрешение на чтение контактов для импорта".showToast(context!!)
+                getString(R.string.contacts_permission_required).showToast(context!!)
             }
         }
     }

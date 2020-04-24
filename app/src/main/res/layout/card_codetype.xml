@@ -2,18 +2,18 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:background="@color/background"
+    android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:layout_height="wrap_content">
+    android:background="@color/background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/containerImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
-        android:id="@+id/containerImage"
-        android:background="@drawable/container_white"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/small_container_white"
         android:padding="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -21,9 +21,9 @@
             android:id="@+id/codeTypeImage"
             android:layout_width="@dimen/card_size"
             android:layout_height="@dimen/card_size"
-            android:src="@drawable/instagram"
             android:layout_margin="8dp"
             android:scaleType="fitCenter"
+            android:src="@drawable/instagram"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,16 +33,16 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
+        android:id="@+id/codeTypeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/codeTypeName"
-        android:text="Instagram"
-        android:gravity="center_horizontal"
         android:layout_marginVertical="8dp"
-        app:layout_constraintTop_toBottomOf="@id/containerImage"
+        android:gravity="center_horizontal"
+        android:text="@string/instagram"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/containerImage">
 
     </TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>

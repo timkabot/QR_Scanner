@@ -7,10 +7,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/my_template"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/allContainer"
@@ -28,10 +30,10 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
-                android:padding="8dp"
                 android:background="@drawable/container_white"
-                app:layout_constraintStart_toStartOf="parent"
+                android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.ms.square.android.expandabletextview.ExpandableTextView
@@ -41,28 +43,29 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="24dp"
                     android:gravity="center"
-                    app:maxCollapsedLines="1"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:maxCollapsedLines="1">
+
                     <TextView
                         android:id="@id/expandable_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:text="vk.com/timkabor"
-                        android:textSize="12sp"
-                        android:textColor="#666666" />
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+
                     <ImageButton
                         android:id="@id/expand_collapse"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="16dp"
                         android:layout_gravity="right|bottom"
-                        android:background="@android:color/transparent"/>
+                        android:background="@android:color/transparent"
+                        android:padding="16dp" />
                 </com.ms.square.android.expandabletextview.ExpandableTextView>
 
                 <ImageView
@@ -87,14 +90,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
-
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/saveButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_gradient_shape"
+                    android:background="@drawable/gradient_background_button"
                     android:gravity="center"
                     android:paddingVertical="16dp"
                     android:text="@string/save"
@@ -122,16 +124,18 @@
                     app:layout_constraintTop_toTopOf="@+id/saveButton" />
 
             </LinearLayout>
-
+            <com.google.android.ads.nativetemplates.TemplateView
+                android:id="@+id/my_template"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility = "gone"
+                app:gnt_template_type="@layout/gnt_small_template_view"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-    <com.google.android.ads.nativetemplates.TemplateView
-        android:id="@+id/my_template"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility = "gone"
-        app:gnt_template_type="@layout/gnt_small_template_view"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

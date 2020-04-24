@@ -2,19 +2,20 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.ContainerActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/adView"
+        app:layout_constraintBottom_toTopOf="@+id/adViewContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <include
             android:id="@+id/customToolbar"
             layout="@layout/custom_toolbar"
@@ -35,13 +36,15 @@
             app:layout_constraintVertical_bias="1.0" />
 
 
-        <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+        <com.app.qrscanner.presentation.customScannerView.MyBottomNavigationView
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@android:color/white"
             android:elevation="0dp"
+            app:itemTextAppearanceActive="@drawable/gradient_background"
+            app:itemTextAppearanceInactive="@drawable/gradient_background"
             app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -76,13 +79,11 @@
     <!--        app:layout_constraintRight_toRightOf="parent"-->
     <!--        app:menu="@menu/navigation" />-->
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/adViewContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
