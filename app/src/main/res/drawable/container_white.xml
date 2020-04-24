@@ -1,5 +1,5 @@
 <nine-patch
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:src="@drawable/icon_button"
+    android:src="@drawable/icon_button_9p"
     >
 </nine-patch>
