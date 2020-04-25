@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:background="@color/background">
 
-        <com.app.qrscanner.presentation.customScannerView.MyGradientTextView
+        <com.app.qrscanner.presentation.customViews.MyGradientTextView
             android:id="@+id/generalSettingsTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/general_settings"
             android:textColor="@android:color/black"
-            android:textSize="14sp"
+            style="@style/myBigTextView"
             app:endColor="@color/colorPrimary"
             app:isVertical="true"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,22 +56,22 @@
                     android:src="@drawable/sound" />
 
                 <TextView
+                    style="@style/myTextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="@string/beep"
-                    android:textSize="12sp" />
+                    android:text="@string/beep" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/soundDescriptionTextView"
+                style="@style/mySmallTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="40dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/beep_when_scan_is_succesful"
                 android:textColor="@color/app_lighttext"
-                android:textSize="10sp"
                 app:layout_constraintEnd_toStartOf="@+id/soundSwitch"
                 app:layout_constraintStart_toStartOf="@+id/soundTextView"
                 app:layout_constraintTop_toBottomOf="@+id/soundTextView" />
@@ -112,10 +112,10 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="@string/vibrate"
-                    android:textSize="12sp" />
+                    style="@style/myTextView"  />
             </LinearLayout>
 
 
@@ -123,11 +123,11 @@
                 android:id="@+id/textView5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="40dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/vibrate_when_scan_is_succesful"
+                style="@style/mySmallTextView"
                 android:textColor="@color/app_lighttext"
-                android:textSize="10sp"
 
                 app:layout_constraintEnd_toStartOf="@+id/vibrateSwitch"
                 app:layout_constraintStart_toStartOf="@+id/textView4"
@@ -169,22 +169,22 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="@string/autocopy_to_clipboard"
-                    android:textSize="12sp" />
+                    style="@style/myTextView"  />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/textView13"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="40dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="24dp"
                 android:text="@string/auto_copied_to_clipboard"
                 android:textColor="@color/app_lighttext"
-                android:textSize="10sp"
+                style="@style/mySmallTextView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/copySwitch"
                 app:layout_constraintStart_toStartOf="@+id/textView6"
@@ -203,7 +203,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <com.app.qrscanner.presentation.customScannerView.MyGradientTextView
+        <com.app.qrscanner.presentation.customViews.MyGradientTextView
             android:id="@+id/helpTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -211,7 +211,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/feedback"
             android:textColor="@android:color/black"
-            android:textSize="14sp"
+            style="@style/myBigTextView"
             app:endColor="@color/colorPrimary"
             app:isVertical="true"
             app:layout_constraintStart_toStartOf="parent"
@@ -248,10 +248,10 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="@string/rate_us"
-                    android:textSize="12sp" />
+                    style="@style/myTextView"  />
             </LinearLayout>
 
             <ImageView
@@ -282,10 +282,10 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="@string/share_with_friends"
-                    android:textSize="12sp" />
+                    style="@style/myTextView"  />
             </LinearLayout>
 
             <ImageView
@@ -319,10 +319,10 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="@string/privacy_policy"
-                    android:textSize="12sp" />
+                    style="@style/myTextView"  />
             </LinearLayout>
 
 

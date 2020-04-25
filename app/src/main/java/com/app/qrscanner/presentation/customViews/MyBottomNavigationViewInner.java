@@ -1,4 +1,4 @@
-package com.app.qrscanner.presentation.customScannerView;
+package com.app.qrscanner.presentation.customViews;
 
 
 import android.annotation.SuppressLint;

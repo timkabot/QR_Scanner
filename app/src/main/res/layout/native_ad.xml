@@ -1,0 +1,76 @@
+<com.google.android.gms.ads.formats.UnifiedNativeAdView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/basic_settings_9p"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/adAppIcon"
+                android:layout_width="@dimen/big_icon_size"
+                android:layout_height="@dimen/big_icon_size"
+                android:layout_marginStart="24dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/adHeadline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:text="yandex Music "
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/adAppIcon"
+                app:layout_constraintTop_toTopOf="@+id/adAppIcon" />
+
+            <TextView
+                android:id="@+id/adDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="2dp"
+                android:text=" Слушайте музыку без интернета "
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/adAppIcon"
+                app:layout_constraintTop_toBottomOf="@+id/adHeadline" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/adButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="48dp"
+            android:layout_marginVertical="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/ad_button"
+            android:elevation="20dp"
+            android:paddingHorizontal="24dp"
+            android:text="@string/create"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textSize="@dimen/_14sdp"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.gms.ads.formats.UnifiedNativeAdView>

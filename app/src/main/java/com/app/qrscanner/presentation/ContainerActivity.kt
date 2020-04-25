@@ -30,7 +30,6 @@ import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import ru.terrakok.cicerone.commands.Command
-import java.lang.Exception
 
 
 class ContainerActivity : AppCompatActivity() {
@@ -79,28 +78,32 @@ class ContainerActivity : AppCompatActivity() {
         backButton.setOnClickListener { router.exit() }
 
         createQrButton.setOnClickListener {
-            if (currentFragment is CreateCodeBaseFragment) {
-                val frg = currentFragment as CreateCodeBaseFragment
-                val (result, schema) = frg.createCode()
-                if (result != "") {
-                    mainVM.goToScreen(Screens.ShowCreatedQRScreen(result))
-
-                    var codeType = codeTypeInteractor.getCodeTypeForSchema(schema)
-                    if(codeType == CodeType.URI) codeType = codeTypeInteractor.getSiteType(result)
-
-                    println("Trying to save \n ${result}")
-                    databaseInteractor.saveCodeInDatabase(
-                        Code(
-                            data = result,
-                            status = CodeStatus.CREATED,
-                            type = codeType
-                        )
-                    )
-                }
-            }
+            createButtonOnClick()
         }
     }
 
+    fun createButtonOnClick(){
+        if (currentFragment is CreateCodeBaseFragment) {
+            val frg = currentFragment as CreateCodeBaseFragment
+            val (result, schema) = frg.createCode()
+            if (result != "") {
+
+                var codeType = codeTypeInteractor.getCodeTypeForSchema(schema)
+                if(codeType == CodeType.URI) codeType = codeTypeInteractor.getSiteType(result)
+
+                mainVM.goToScreen(Screens.ShowCreatedQRScreen(result, codeType))
+
+                println("Trying to save \n${result} \n with codeType $codeType")
+                databaseInteractor.saveCodeInDatabase(
+                    Code(
+                        data = result,
+                        status = CodeStatus.CREATED,
+                        type = codeType
+                    )
+                )
+            }
+        }
+    }
     private fun initActionBar() {
         supportActionBar?.apply {
             displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM

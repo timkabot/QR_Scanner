@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.webkit.URLUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.app.qrscanner.R
 import com.app.qrscanner.Screens
@@ -33,12 +34,14 @@ class CreateCodeFragment : BaseFragment() {
         createCodeButton.setOnClickListener {
             editText.text.let {
                 if (it.isNotEmpty()) {
+                    if(URLUtil.isValidUrl(it.toString()))
                     databaseInteractor.saveCodeInDatabase(
-                        Code(
-                            data = it.toString(),
-                            status = CodeStatus.CREATED
-                        )
+                        Code(data = it.toString(), status = CodeStatus.CREATED, type = CodeType.URI)
                     )
+                    else
+                        databaseInteractor.saveCodeInDatabase(
+                            Code(data = it.toString(), status = CodeStatus.CREATED, type = CodeType.TEXT)
+                        )
                     router.navigateTo(
                         Screens.ShowCreatedQRScreen(editText.text.toString())
                     )

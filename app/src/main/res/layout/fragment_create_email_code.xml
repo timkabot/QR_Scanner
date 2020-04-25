@@ -16,6 +16,8 @@
             android:layout_width="@dimen/icon_container"
             android:layout_height="@dimen/icon_container"
             android:layout_marginTop="24dp"
+            android:scaleType="fitXY"
+
             android:src="@drawable/container_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -127,15 +129,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@drawable/edittext_border"
             android:gravity="top"
             android:hint="@string/enter_text"
-            android:inputType="text|textMultiLine"
-            android:minHeight="150dp"
+            android:minHeight="120dp"
+            style="@style/textInputEditText"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/contentTextView" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/createButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_gradient_shape"
+            android:elevation="20dp"
+            android:paddingHorizontal="24dp"
+            android:text="@string/create"
+            android:textAllCaps="false"
 
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contentInput" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

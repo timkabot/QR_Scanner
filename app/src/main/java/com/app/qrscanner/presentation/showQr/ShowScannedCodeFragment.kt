@@ -1,11 +1,16 @@
 package com.app.qrscanner.presentation.showQr
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import com.app.qrscanner.R
 import com.app.qrscanner.domain.entities.CodeType
 import com.app.qrscanner.domain.entities.Contact
@@ -20,6 +25,7 @@ import com.google.android.ads.nativetemplates.NativeTemplateStyle
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.formats.UnifiedNativeAd
+import com.google.android.gms.ads.formats.UnifiedNativeAdView
 import com.google.zxing.client.result.*
 import com.google.zxing.client.result.ParsedResultType.*
 import kotlinx.android.synthetic.main.fragment_show_scanned_code.*
@@ -39,23 +45,44 @@ class ShowScannedCodeFragment : BaseFragment() {
 
     }
 
-    private fun initAds() {
+    private fun initNativeAds() {
         val adLoader = AdLoader.Builder(context, "ca-app-pub-3940256099942544/2247696110")
             .forUnifiedNativeAd { ad: UnifiedNativeAd ->
-                val style = NativeTemplateStyle.Builder()
-                    .withMainBackgroundColor(ColorDrawable(Color.WHITE)).build()
 
-                my_template.setStyles(style)
-                my_template.setNativeAd(ad)
+                val inflater =
+                    context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                val adView = inflater.inflate(R.layout.native_ad, null) as UnifiedNativeAdView
+
+                val icon = adView.findViewById<ImageView>(R.id.adAppIcon)
+                icon.setImageDrawable(ad.icon.drawable)
+                adView.iconView = icon
+
+                val headline = adView.findViewById<TextView>(R.id.adHeadline)
+                headline.text = ad.headline
+                adView.headlineView = headline
+
+                val description = adView.findViewById<TextView>(R.id.adDescription)
+                description.text = ad.body
+                adView.bodyView = description
+
+                val button = adView.findViewById<Button>(R.id.adButton)
+                button.text = ad.callToAction
+                adView.callToActionView = button
+
+                adView.setNativeAd(ad)
+                adFrame.removeAllViews()
+                adFrame.addView(adView)
             }
             .build()
         adLoader.loadAd(AdRequest.Builder().build())
 
     }
+
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        initAds()
+        initNativeAds()
             mainVM.lastScannedResult?.let {
                 val parsedResult = ResultParser.parseResult(it)
                 initContentTextView(parsedResult)

@@ -1,8 +1,7 @@
-package com.app.qrscanner.presentation.customScannerView
+package com.app.qrscanner.presentation.customViews
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Paint
 import android.graphics.Shader

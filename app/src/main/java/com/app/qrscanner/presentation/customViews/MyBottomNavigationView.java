@@ -1,4 +1,4 @@
-package com.app.qrscanner.presentation.customScannerView;
+package com.app.qrscanner.presentation.customViews;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -12,7 +12,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewInner;
 
 public class MyBottomNavigationView extends MyBottomNavigationViewInner {
 

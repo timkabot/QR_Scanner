@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
 
-    <com.app.qrscanner.presentation.customScannerView.MyZxing
+    <com.app.qrscanner.presentation.customViews.MyZxing
         android:id="@+id/qrCodeScanner"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

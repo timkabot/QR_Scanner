@@ -13,6 +13,9 @@ class CreateViberCodeFragment : CreateCodeBaseFragment(){
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         ccp.registerCarrierNumberEditText(editTextCarrierNumber)
+        createButton.setOnClickListener {
+            getMyActivity().createButtonOnClick()
+        }
 
     }
     private fun checkInputs(): Boolean {

@@ -21,6 +21,9 @@ class CreateTwitterCodeFragment : CreateCodeBaseFragment(), View.OnClickListener
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initButtons()
+        createButton.setOnClickListener {
+            getMyActivity().createButtonOnClick()
+        }
     }
 
     private fun initButtons() {

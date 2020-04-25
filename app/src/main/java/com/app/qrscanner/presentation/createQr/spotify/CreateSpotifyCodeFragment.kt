@@ -1,6 +1,7 @@
 package com.app.qrscanner.presentation.createQr.spotify
 
 
+import android.os.Bundle
 import com.app.qrscanner.R
 import com.app.qrscanner.presentation.global.CreateCodeBaseFragment
 import com.app.qrscanner.utils.showToast
@@ -19,6 +20,12 @@ class CreateSpotifyCodeFragment : CreateCodeBaseFragment() {
         return true
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        createButton.setOnClickListener {
+            getMyActivity().createButtonOnClick()
+        }
+    }
     override fun createCode(): Pair<String, Schema> {
         if (checkInputs()) {
             return Pair("spotify:${artistInput.text}:spotify:track:${songInput.text}/", Url())

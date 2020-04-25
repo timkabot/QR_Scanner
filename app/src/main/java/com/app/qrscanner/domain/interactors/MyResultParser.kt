@@ -2,16 +2,20 @@ package com.app.qrscanner.domain.interactors
 
 import com.app.qrscanner.utils.getValue
 import com.app.qrscanner.utils.isNotNullOrEmpty
-import com.google.zxing.Result
-import com.google.zxing.client.result.*
+import com.google.zxing.client.result.EmailAddressParsedResult
+import com.google.zxing.client.result.GeoParsedResult
+import com.google.zxing.client.result.ParsedResult
+import com.google.zxing.client.result.TelParsedResult
 import it.auron.library.vcard.VCard
 import it.auron.library.vcard.VCardParser
 import it.auron.library.vevent.VEvent
 import it.auron.library.vevent.VEventParser
 import it.auron.library.wifi.WifiCard
 import it.auron.library.wifi.WifiCardParser
-import net.glxn.qrgen.core.scheme.*
-import java.lang.Exception
+import net.glxn.qrgen.core.scheme.EMail
+import net.glxn.qrgen.core.scheme.GeoInfo
+import net.glxn.qrgen.core.scheme.SMS
+import net.glxn.qrgen.core.scheme.Telephone
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,7 +23,7 @@ class MyResultParser(val resultInteractor: ParsedResultInteractor) {
     val res = StringBuilder()
     private val simpleDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("ru"))
     lateinit var result: ParsedResult
-    private fun parseVCard(value: VCard) : String {
+    private fun parseVCard(value: VCard): String {
         res.append("Тип: контакт \n")
         if (value.name.isNotNullOrEmpty()) {
             res.append("Имя: ${value.name}\n")
@@ -42,7 +46,8 @@ class MyResultParser(val resultInteractor: ParsedResultInteractor) {
         }
         return res.toString()
     }
-    fun parseWifi(wifi : WifiCard) : String {
+
+    private fun parseWifi(wifi: WifiCard): String {
         res.append("Тип: WIFI \n")
         if (wifi.sid.isNotNullOrEmpty()) {
             res.append("Имя сети: ${wifi.sid}\n")
@@ -56,7 +61,7 @@ class MyResultParser(val resultInteractor: ParsedResultInteractor) {
         return res.toString()
     }
 
-    private fun parseVEvent(vEvent: VEvent) : String{
+    private fun parseVEvent(vEvent: VEvent): String {
         res.append("Тип: календарь \n")
         if (vEvent.summary.isNotNullOrEmpty()) {
             res.append("Название: ${vEvent.summary}\n")
@@ -70,7 +75,7 @@ class MyResultParser(val resultInteractor: ParsedResultInteractor) {
             println("date start found")
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = vEvent.dtStart.toLong()
-            res.append("Дата начала: ${simpleDateFormat.format(calendar.time)  }\n")
+            res.append("Дата начала: ${simpleDateFormat.format(calendar.time)}\n")
         }
         if (vEvent.dtEnd.isNotNullOrEmpty()) {
             val calendar = Calendar.getInstance()
@@ -80,7 +85,7 @@ class MyResultParser(val resultInteractor: ParsedResultInteractor) {
         return res.toString()
     }
 
-    fun parseSms(sms: SMS) : String{
+    private fun parseSms(sms: SMS): String {
         res.append("Тип: SMS \n")
         if (sms.number.isNotNullOrEmpty()) {
             res.append("Номер: ${sms.number}\n")
@@ -91,40 +96,45 @@ class MyResultParser(val resultInteractor: ParsedResultInteractor) {
         }
         return res.toString()
     }
-    fun appropriateTextFromQrValue(qr:String) : String {
 
-        if(VCardParser.isVCard(qr)){
+    fun appropriateTextFromQrValue(qr: String): String {
+
+        if (VCardParser.isVCard(qr)) {
             return parseVCard(VCardParser.parse(qr))
         }
 
-        if(WifiCardParser.isWifi(qr)){
+        if (WifiCardParser.isWifi(qr)) {
             return parseWifi(WifiCardParser.parse(qr))
         }
 
-        if(VEventParser.isVEvent(qr)){
+        if (VEventParser.isVEvent(qr)) {
             println("Trying to parse ${qr}")
             return parseVEvent(VEventParser.parse(qr))
         }
 
         try {
-            val sms =SMS.parse(qr)
+            val sms = SMS.parse(qr)
             return parseSms(sms)
-        } catch (e:Exception) {}
+        } catch (e: Exception) {
+        }
 
         try {
             EMail.parse(qr)
             return resultInteractor.getInfoForEmail(result as EmailAddressParsedResult)
-        } catch (e:Exception) {}
+        } catch (e: Exception) {
+        }
 
         try {
             GeoInfo.parse(qr)
             return resultInteractor.getInfoForGeo(result as GeoParsedResult)
-        } catch (e:Exception) {}
+        } catch (e: Exception) {
+        }
 
         try {
             Telephone.parse(qr)
             return resultInteractor.getInfoForTel(result as TelParsedResult)
-        } catch (e:Exception) {}
+        } catch (e: Exception) {
+        }
 
         return qr
     }

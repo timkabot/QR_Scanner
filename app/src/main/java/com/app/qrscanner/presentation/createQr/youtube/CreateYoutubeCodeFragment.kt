@@ -18,6 +18,9 @@ class CreateYoutubeCodeFragment : CreateCodeBaseFragment(), View.OnClickListener
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initButtons()
+        createButton.setOnClickListener {
+            getMyActivity().createButtonOnClick()
+        }
     }
 
     override val layoutRes = R.layout.fragment_create_youtube_code

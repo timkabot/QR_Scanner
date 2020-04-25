@@ -6,45 +6,37 @@ import android.app.Activity.RESULT_OK
 import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.os.Vibrator
 import android.provider.MediaStore
 import android.view.View
-import android.view.ViewGroup
-import android.widget.RelativeLayout
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.ContextCompat.getColor
-import androidx.core.view.marginBottom
 import com.app.qrscanner.R
 import com.app.qrscanner.Screens
 import com.app.qrscanner.data.local.SettingsLocal
 import com.app.qrscanner.domain.entities.Code
 import com.app.qrscanner.domain.entities.CodeStatus
-import com.app.qrscanner.domain.entities.SerializableResult
 import com.app.qrscanner.domain.interactors.AndroidServicesInteractor
 import com.app.qrscanner.domain.interactors.DatabaseInteractor
 import com.app.qrscanner.domain.interactors.ParsedResultInteractor
 import com.app.qrscanner.presentation.ContainerActivity
 import com.app.qrscanner.presentation.MainViewModel
-import com.app.qrscanner.presentation.customScannerView.MyZxing
+import com.app.qrscanner.presentation.customViews.MyZxing
 import com.app.qrscanner.presentation.global.BaseFragment
 import com.app.qrscanner.utils.HUAWEI
 import com.app.qrscanner.utils.MY_CAMERA_REQUEST_CODE
 import com.google.zxing.*
 import com.google.zxing.client.result.ResultParser
-import com.google.zxing.common.HybridBinarizer
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.fragment_scan.*
-import me.dm7.barcodescanner.zxing.ZXingScannerView
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.terrakok.cicerone.Router
-import java.util.*
 
 
 class ScanQrFragment : BaseFragment(), MyZxing.ResultHandler {

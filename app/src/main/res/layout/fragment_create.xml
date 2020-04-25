@@ -25,7 +25,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginStart="16dp"
             android:text="@string/url"
-            android:textSize="14sp"
+            style="@style/myTextView"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,6 +37,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="15dp"
             android:background="@null"
+            style="@style/mySmallTextView"
             android:hint="@string/enter_url_or_text"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@+id/webSiteTextView"

@@ -1,5 +1,6 @@
 package com.app.qrscanner
 
+import com.app.qrscanner.domain.entities.CodeType
 import com.app.qrscanner.domain.entities.SerializableResult
 import com.app.qrscanner.presentation.createQr.CreateCodeFragment
 import com.app.qrscanner.presentation.createQr.calendar.CreateCalendarCodeFragment
@@ -108,9 +109,9 @@ object Screens {
         override fun getFragment() = CreateCalendarCodeFragment()
     }
 
-    class ShowCreatedQRScreen(private val value: String) :
+    class ShowCreatedQRScreen(private val value: String, val codeType: CodeType? = null) :
         SupportAppScreen() {
-        override fun getFragment() = ShowCreatedCodeFragment.create(value)
+        override fun getFragment() = ShowCreatedCodeFragment.create(value, codeType)
     }
 
     object ShowScannedQRScreen :

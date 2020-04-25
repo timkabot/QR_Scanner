@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.common.BitMatrix
 import com.google.zxing.qrcode.QRCodeWriter
 import net.glxn.qrgen.android.QRCode
 import kotlin.properties.ReadWriteProperty
@@ -46,11 +48,10 @@ inline fun <T : Any, R> whenNotNull(input: T?, callback: (T) -> R): R? {
 fun generateNotInstalledAppError(appName: String, context: Context){
     "Сначала установите приложение ${appName} пожалуйста".showToast(context)
 }
-fun createQR(value: String, width: Int = 512, height: Int = 512): Bitmap {
-    val writer = QRCodeWriter()
+fun createQR(value: String, width: Int = 1024, height: Int = 1024): Bitmap {
     return QRCode.from(value)
         .withCharset("UTF-8")
-        .withSize(1024,1024)
+        .withSize(width,height)
         .bitmap()
 }
 

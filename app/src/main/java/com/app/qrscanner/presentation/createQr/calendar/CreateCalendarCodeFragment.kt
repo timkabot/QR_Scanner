@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
 import com.app.qrscanner.R
+import com.app.qrscanner.presentation.MainViewModel
 import com.app.qrscanner.presentation.global.CreateCodeBaseFragment
 import com.app.qrscanner.utils.showToast
 import com.app.qrscanner.utils.whenNotNull
@@ -13,6 +14,7 @@ import net.glxn.qrgen.core.scheme.ICal
 import net.glxn.qrgen.core.scheme.IEvent
 import net.glxn.qrgen.core.scheme.Schema
 import net.glxn.qrgen.core.scheme.Wifi
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -22,6 +24,7 @@ class CreateCalendarCodeFragment : CreateCodeBaseFragment() {
     private var startDate= Calendar.getInstance()
     private var endDate = Calendar.getInstance()
     private val showDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("ru"))
+    private val mainVM: MainViewModel by viewModel()
 
     private fun checkInputs(): Boolean {
         if (titleInput.text!!.isEmpty() &&
@@ -45,6 +48,10 @@ class CreateCalendarCodeFragment : CreateCodeBaseFragment() {
         endDateText.setText(showDateFormat.format(endDate.time))
 
         initDates()
+
+        createButton.setOnClickListener {
+            getMyActivity().createButtonOnClick()
+        }
 
         alldaySwitch.setOnCheckedChangeListener { _, b ->
             if(b) {
@@ -114,21 +121,21 @@ class CreateCalendarCodeFragment : CreateCodeBaseFragment() {
         if (checkInputs()) {
             val vEvent = VEvent()
             whenNotNull(titleInput.text.toString()) {
-                vEvent.summary = titleInput.text.toString() + "\n"
+                vEvent.summary = titleInput.text.toString().trim()
             }
 
             vEvent.dtStart = startDate.timeInMillis.toString()
             vEvent.dtEnd = endDate.timeInMillis.toString()
 
             whenNotNull(descriptionInput.text.toString()) {
-                vEvent.summary += descriptionInput.text.toString()
+                vEvent.summary += descriptionInput.text.toString().trim()
             }
 
             whenNotNull(locationInput.toString()) {
                 vEvent.location = locationInput.text.toString()
             }
             println("Build string after cration ${vEvent.buildString()}")
-            return Pair(vEvent.buildString(), ICal(IEvent()))
+            return Pair(vEvent.buildString().trim(), ICal(IEvent()))
         }
         return Pair("", Wifi())
     }

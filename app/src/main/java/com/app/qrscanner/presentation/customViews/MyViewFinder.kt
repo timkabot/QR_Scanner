@@ -1,4 +1,4 @@
-package com.app.qrscanner.presentation.customScannerView
+package com.app.qrscanner.presentation.customViews
 
 import android.content.Context
 import android.graphics.*
@@ -6,12 +6,10 @@ import android.graphics.Paint.Join
 import android.util.AttributeSet
 import android.view.View
 import com.app.qrscanner.R
-import com.app.qrscanner.presentation.MainViewModel
 import me.dm7.barcodescanner.core.DisplayUtils
 import me.dm7.barcodescanner.core.IViewFinder
 import me.dm7.barcodescanner.core.R.color
 import me.dm7.barcodescanner.core.R.integer
-import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class MyViewFinder : View, IViewFinder {

@@ -19,12 +19,17 @@ class CreateInstagramCodeFragment : CreateCodeBaseFragment(), View.OnClickListen
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initButtons()
+        createButton.setOnClickListener {
+            getMyActivity().createButtonOnClick()
+        }
     }
 
     private fun initButtons() {
         btn0.setOnClickListener(this)
         btn1.setOnClickListener(this)
         btnToUnfocus = btn0
+
+
 
     }
 

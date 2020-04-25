@@ -36,6 +36,9 @@ class CreatePhoneCodeFragment : CreateCodeBaseFragment() {
                 }
             }
         })
+        createButton.setOnClickListener {
+            getMyActivity().createButtonOnClick()
+        }
     }
 
     private fun openPickContactDialog() {

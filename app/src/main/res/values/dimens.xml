@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="icon_height">16dp</dimen>
-    <dimen name="icon_width">16dp</dimen>
+    <dimen name="icon_height">24dp</dimen>
+    <dimen name="icon_width">24dp</dimen>
     <dimen name="card_size">48dp</dimen>
     <dimen name="big_icon_size">64dp</dimen>
     <dimen name="icon_container">100dp</dimen>

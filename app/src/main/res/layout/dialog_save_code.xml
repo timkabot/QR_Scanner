@@ -7,6 +7,7 @@
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
+        android:paddingHorizontal="@dimen/_22sdp"
         android:layout_height="wrap_content"
         android:hint="@string/enter_the_filename_here" />
 

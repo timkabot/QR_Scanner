@@ -30,6 +30,9 @@ class CreateTextCodeFragment : CreateCodeBaseFragment(){
         imageView4.setOnClickListener {
             pasteText.text
         }
+        createButton.setOnClickListener {
+            getMyActivity().createButtonOnClick()
+        }
     }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

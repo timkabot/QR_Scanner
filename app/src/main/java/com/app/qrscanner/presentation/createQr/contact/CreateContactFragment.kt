@@ -31,6 +31,9 @@ class CreateContactFragment : CreateCodeBaseFragment() {
     }
 
     private fun initListeners() {
+        createButton.setOnClickListener {
+            getMyActivity().createButtonOnClick()
+        }
         nameInput.setDrawableClickListener(object : onDrawableClickListener {
             override fun onClick(target: DrawablePosition) {
                 when (target) {

@@ -35,6 +35,9 @@ class CreateSmsCodeFragment : CreateCodeBaseFragment() {
                 }
             }
         })
+        createButton.setOnClickListener {
+            getMyActivity().createButtonOnClick()
+        }
     }
     fun getPhoneNumber() {
         val cursor = activity!!.contentResolver.query(contactUri!!, null, null, null, null)

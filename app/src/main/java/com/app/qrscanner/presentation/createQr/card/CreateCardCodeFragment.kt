@@ -2,6 +2,7 @@ package com.app.qrscanner.presentation.createQr.card
 
 import android.Manifest
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -16,11 +17,16 @@ import com.app.qrscanner.utils.whenNotNull
 import com.mindorks.editdrawabletext.DrawablePosition
 import com.mindorks.editdrawabletext.onDrawableClickListener
 import kotlinx.android.synthetic.main.fragment_create_mycard_code.*
+import kotlinx.android.synthetic.main.fragment_create_mycard_code.createButton
 import net.glxn.qrgen.core.scheme.Schema
 import net.glxn.qrgen.core.scheme.VCard
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CreateCardCodeFragment : CreateCodeBaseFragment() {
     private val REQUEST_CONTACT = 1
+    private val showDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("ru"))
+    private var birthday = Calendar.getInstance()
 
     override val layoutRes = R.layout.fragment_create_mycard_code
     private var contactUri: Uri? = null
@@ -41,6 +47,9 @@ class CreateCardCodeFragment : CreateCodeBaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initListeners()
+
+        birthdayInput.setText(showDateFormat.format(birthday.time))
+
     }
 
     override fun createCode(): Pair<String, Schema> {
@@ -65,7 +74,10 @@ class CreateCardCodeFragment : CreateCodeBaseFragment() {
         return Pair("", card)
     }
 
-    fun initListeners() {
+    private fun initListeners() {
+        createButton.setOnClickListener {
+            getMyActivity().createButtonOnClick()
+        }
         nameInput.setDrawableClickListener(object : onDrawableClickListener {
             override fun onClick(target: DrawablePosition) {
                 when (target) {
@@ -75,6 +87,28 @@ class CreateCardCodeFragment : CreateCodeBaseFragment() {
                 }
             }
         })
+
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+        birthdayInput.setOnClickListener {
+            val dpd = DatePickerDialog(
+                context!!,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    // Display Selected date in TextView
+                    val calendar = Calendar.getInstance()
+                    calendar[year, monthOfYear] = dayOfMonth
+                    birthday = calendar
+                    val formatedDate = showDateFormat.format(calendar.time)
+                    birthdayInput.setText(formatedDate)
+                },
+                year,
+                month,
+                day
+            )
+            dpd.show()
+        }
     }
 
     fun checkContactPermission() {

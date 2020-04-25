@@ -1,5 +1,6 @@
 package com.app.qrscanner.presentation.createQr.mail
 
+import android.os.Bundle
 import com.app.qrscanner.R
 import com.app.qrscanner.domain.entities.MailSchema
 import com.app.qrscanner.presentation.global.BaseFragment
@@ -13,6 +14,12 @@ import net.glxn.qrgen.core.scheme.Schema
 class CreateMailCodeFragment : CreateCodeBaseFragment(){
     override val layoutRes = R.layout.fragment_create_email_code
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        createButton.setOnClickListener {
+            getMyActivity().createButtonOnClick()
+        }
+    }
     private fun checkInputs(): Boolean {
         if (emailInput.text.isEmpty() &&
             subjectInput.text.isEmpty() &&

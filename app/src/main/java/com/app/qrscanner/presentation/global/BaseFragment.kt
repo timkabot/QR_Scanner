@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.app.qrscanner.presentation.ContainerActivity
 
 abstract class BaseFragment : Fragment() {
     abstract val layoutRes: Int
@@ -12,4 +13,5 @@ abstract class BaseFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(layoutRes, container, false)
 
+    fun getMyActivity() = activity as ContainerActivity
 }

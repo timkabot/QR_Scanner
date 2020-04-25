@@ -31,7 +31,7 @@ class CreatedCodesHistory :BaseFragment(){
     private fun initRecycler() {
         codesAdapter = CodesAdapter(arrayListOf(), object : MyOnCodeClickListener {
             override fun onClick(code: Code) {
-                router.navigateTo(Screens.ShowCreatedQRScreen(code.data))
+                router.navigateTo(Screens.ShowCreatedQRScreen(code.data, code.type))
             }
         })
         linearLayoutManager = LinearLayoutManager(context)

@@ -116,6 +116,8 @@ dependencies {
     //expandable textview
     implementation 'com.ms-square:expandableTextView:0.1.4'
 
+    //text size
+    implementation 'com.intuit.sdp:sdp-android:1.0.4'
     implementation project(':nativetemplates')
 
 
