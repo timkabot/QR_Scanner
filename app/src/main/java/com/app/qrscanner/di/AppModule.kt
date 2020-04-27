@@ -17,7 +17,7 @@ fun createAppModule() = module {
     single { CodeTypeInteractor() }
     single { DatabaseInteractor(get(),get()) }
     single { ParsedResultInteractor(get()) }
-    single { AndroidServicesInteractor(get()) }
+    single { AndroidServicesInteractor() }
     single { MainViewModel(get(),get(), get(), get(), get()) }
     factory { MyResultParser(get()) }
 }

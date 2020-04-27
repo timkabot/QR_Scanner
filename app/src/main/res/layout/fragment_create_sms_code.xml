@@ -8,9 +8,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="12dp"
 
-        android:layout_marginHorizontal="16dp"
         android:background="@color/background">
 
         <ImageView
@@ -64,6 +63,9 @@
             android:layout_height="wrap_content"
             android:drawableRight="@drawable/contact_import_drawable"
             android:inputType="number"
+            android:backgroundTint="@color/app_lighttext"
+            android:imeOptions="actionNext"
+            android:lines="1"
             android:outlineAmbientShadowColor="@color/colorPrimaryDark"
             android:outlineSpotShadowColor="@color/colorPrimaryDark"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,6 +93,7 @@
             android:layout_marginTop="8dp"
             style="@style/textInputEditText"
             android:hint="@string/enter_text"
+            android:imeOptions="actionDone"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -100,12 +103,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/rounded_gradient_shape"
             android:elevation="20dp"
             android:paddingHorizontal="24dp"
             android:text="@string/create"
             android:textAllCaps="false"
+            android:textSize="@dimen/_14sdp"
 
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"

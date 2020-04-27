@@ -2,8 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/scanLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-
 
     <com.app.qrscanner.presentation.customViews.MyZxing
         android:id="@+id/qrCodeScanner"
@@ -44,4 +45,6 @@
         android:layout_marginBottom="55dp"
         android:background="@drawable/gallery_pick_drawable"
         android:padding="8dp" />
+
+
 </RelativeLayout>

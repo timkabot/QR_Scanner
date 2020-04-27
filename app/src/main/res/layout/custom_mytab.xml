@@ -11,7 +11,7 @@
         android:layout_height="30dp"
         android:layout_gravity="center"
 
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:scaleType="centerInside" />
 
     <com.app.qrscanner.presentation.customViews.MyGradientTextView

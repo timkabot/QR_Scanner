@@ -3,8 +3,6 @@ package com.app.qrscanner.presentation.showQr
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,12 +14,11 @@ import com.app.qrscanner.domain.entities.CodeType
 import com.app.qrscanner.domain.entities.Contact
 import com.app.qrscanner.domain.entities.SerializableResult
 import com.app.qrscanner.domain.interactors.CodeTypeInteractor
-import com.app.qrscanner.domain.interactors.ParsedResultInteractor
+import com.app.qrscanner.presentation.ContainerActivity
 import com.app.qrscanner.presentation.MainViewModel
 import com.app.qrscanner.presentation.global.BaseFragment
 import com.app.qrscanner.utils.showToast
 import com.app.qrscanner.utils.whenNotNull
-import com.google.android.ads.nativetemplates.NativeTemplateStyle
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.formats.UnifiedNativeAd
@@ -42,8 +39,10 @@ class ShowScannedCodeFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
-
     }
+
+    private val activity
+        get() = getActivity() as ContainerActivity
 
     private fun initNativeAds() {
         val adLoader = AdLoader.Builder(context, "ca-app-pub-3940256099942544/2247696110")
@@ -142,7 +141,7 @@ class ShowScannedCodeFragment : BaseFragment() {
         }
 
         isbnShare.setOnClickListener {
-            mainVM.androidServicesInteractor.shareText(isbn.isbn)
+            mainVM.androidServicesInteractor.shareText(isbn.isbn, context!!)
         }
     }
 
@@ -152,10 +151,10 @@ class ShowScannedCodeFragment : BaseFragment() {
         calendarLayout.visibility = View.VISIBLE
 
         calendarAddEventButton.setOnClickListener {
-            mainVM.androidServicesInteractor.addCalendar(calendar)
+            mainVM.androidServicesInteractor.addCalendar(calendar, context!!)
         }
         calendarSendEmail.setOnClickListener {
-            mainVM.androidServicesInteractor.sendEmail(text = info)
+            mainVM.androidServicesInteractor.sendEmail(text = info,context =  context!!)
         }
     }
 
@@ -166,10 +165,10 @@ class ShowScannedCodeFragment : BaseFragment() {
 
 
         smsSendButton.setOnClickListener {
-            mainVM.androidServicesInteractor.sendSms(number = sms.numbers[0], text = sms.body)
+            mainVM.androidServicesInteractor.sendSms(number = sms.numbers[0], text = sms.body,context =  context!!)
         }
         smsCallButton.setOnClickListener {
-            mainVM.androidServicesInteractor.callPhone(sms.numbers[0])
+            mainVM.androidServicesInteractor.callPhone(sms.numbers[0], context!!)
         }
     }
 
@@ -179,9 +178,9 @@ class ShowScannedCodeFragment : BaseFragment() {
 
         telLayout.visibility = View.VISIBLE
 
-        telCallButton.setOnClickListener { mainVM.androidServicesInteractor.callPhone(tel.number) }
+        telCallButton.setOnClickListener { mainVM.androidServicesInteractor.callPhone(tel.number, context!!) }
         telAddToContactsButton.setOnClickListener {
-            whenNotNull(tel.number) { mainVM.androidServicesInteractor.addToContacts(Contact(number = tel.number)) }
+            whenNotNull(tel.number) { mainVM.androidServicesInteractor.addToContacts(Contact(number = tel.number), context!!) }
         }
     }
 
@@ -189,9 +188,9 @@ class ShowScannedCodeFragment : BaseFragment() {
         val info = mainVM.parsedResultInteractor.getInfoForGeo(geo)
         setContent(info)
         geoLayout.visibility = View.VISIBLE
-        geoShareButton.setOnClickListener { mainVM.androidServicesInteractor.shareText(info) }
+        geoShareButton.setOnClickListener { mainVM.androidServicesInteractor.shareText(info, context!!) }
         geoShowButton.setOnClickListener {
-            mainVM.androidServicesInteractor.showOnMap(geo.latitude, geo.longitude)
+            mainVM.androidServicesInteractor.showOnMap(geo.latitude, geo.longitude, context = context!!)
         }
     }
 
@@ -200,8 +199,8 @@ class ShowScannedCodeFragment : BaseFragment() {
         setContent(info)
         textLayout.visibility = View.VISIBLE
 
-        textSendEmail.setOnClickListener { mainVM.androidServicesInteractor.sendEmail(info) }
-        textSendSms.setOnClickListener { mainVM.androidServicesInteractor.sendSms(info) }
+        textSendEmail.setOnClickListener { mainVM.androidServicesInteractor.sendEmail(info, context = context!!) }
+        textSendSms.setOnClickListener { mainVM.androidServicesInteractor.sendSms(info, context = context!!) }
     }
 
 
@@ -212,11 +211,11 @@ class ShowScannedCodeFragment : BaseFragment() {
 
         setContent(info)
         urlLayout.visibility = View.VISIBLE
-        urlShareButton.setOnClickListener { mainVM.androidServicesInteractor.shareText(info) }
+        urlShareButton.setOnClickListener { mainVM.androidServicesInteractor.shareText(info, context!!) }
         urlOpenInBrowserButton.setOnClickListener {
             mainVM.androidServicesInteractor.openURI(
                 uri,
-                codeType
+                codeType, context!!
             )
         }
     }
@@ -230,17 +229,17 @@ class ShowScannedCodeFragment : BaseFragment() {
 
         emailAddToContactsButton.setOnClickListener {
             val contact = Contact(email = email.tos?.get(0))
-            mainVM.androidServicesInteractor.addToContacts(contact)
+            mainVM.androidServicesInteractor.addToContacts(contact, context!!)
         }
 
         emailSendEmailButton.setOnClickListener {
             var recipient = email.tos?.get(0)
             if(recipient == null) recipient = ""
-            mainVM.androidServicesInteractor.sendEmail(recipient = recipient, subject = email.subject, text = email.body)
+            mainVM.androidServicesInteractor.sendEmail(recipient = recipient, subject = email.subject, text = email.body, context = context!!)
         }
 
         emailShareButton.setOnClickListener {
-            mainVM.androidServicesInteractor.shareText(info)
+            mainVM.androidServicesInteractor.shareText(info, context!!)
         }
     }
 
@@ -259,16 +258,16 @@ class ShowScannedCodeFragment : BaseFragment() {
                 postal = addressBook.addresses?.get(0),
                 company = addressBook.addresses?.get(0)
             )
-            mainVM.androidServicesInteractor.addToContacts(contact)
+            mainVM.androidServicesInteractor.addToContacts(contact, context!!)
         }
 
         addressBookCallContactButton.setOnClickListener {
             addressBook.phoneNumbers?.get(0)
-                ?.let { it1 -> mainVM.androidServicesInteractor.callPhone(it1) }
+                ?.let { it1 -> mainVM.androidServicesInteractor.callPhone(it1, context!!) }
         }
         addressShowOnMapButton.setOnClickListener {
             addressBook.addresses?.get(0)
-                ?.let { it1 -> mainVM.androidServicesInteractor.showOnMap(address = it1) }
+                ?.let { it1 -> mainVM.androidServicesInteractor.showOnMap(address = it1, context = context!!) }
         }
     }
 
@@ -280,11 +279,27 @@ class ShowScannedCodeFragment : BaseFragment() {
 
 
         wifiConnectButton.setOnClickListener {
-            mainVM.androidServicesInteractor.enableWiFiConnection()
+            mainVM.androidServicesInteractor.enableWiFiConnection(context!!)
         }
         wifiShareButton.setOnClickListener {
-            mainVM.androidServicesInteractor.shareText(info)
+            mainVM.androidServicesInteractor.shareText(info, context!!)
         }
+    }
+
+    private fun changeToolbar() {
+        with(ContainerActivity) {
+            setAppBatTitle("", activity)
+            changeSettingButtonVisibility(activity, View.VISIBLE)
+            changeAdsButtonVisibility(activity, View.VISIBLE)
+            changeNoAdsButtonVisibility(activity, View.GONE)
+            changeBackButtonVisibility(activity, View.VISIBLE)
+            changeCreateQrButtonVisibility(activity, View.GONE)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        changeToolbar()
     }
 
     companion object {

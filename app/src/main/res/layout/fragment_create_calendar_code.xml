@@ -61,7 +61,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="16dp"
+            android:imeOptions="actionNext"
             android:inputType="text"
+            android:maxLines="1"
             app:layout_constraintEnd_toEndOf="@+id/textView8"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
@@ -72,7 +74,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="24dp"
-
             android:text="@string/location"
             android:textColor="@color/app_lighttext"
             app:layout_constraintEnd_toEndOf="parent"
@@ -80,14 +81,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleInput" />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/locationInput"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-
-            android:outlineAmbientShadowColor="@color/colorPrimaryDark"
-            android:outlineSpotShadowColor="@color/colorPrimaryDark"
+            android:imeOptions="actionNext"
+            android:lines="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -123,73 +123,90 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="24dp"
             android:gravity="center"
-
             android:text="@string/beginning"
             android:textColor="@color/app_lighttext"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/birthdateTextView" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:id="@+id/startDateText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-
+            android:background="@android:color/transparent"
             android:focusable="false"
             android:gravity="center"
             android:inputType="text"
             android:maxLines="1"
+            android:textColor="@android:color/black"
+
             android:textSize="12sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/startTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/startTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/startTextView" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:id="@+id/endDateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
+            android:background="@color/transparent"
             android:focusable="false"
             android:gravity="center"
-            android:inputType="text"
             android:maxLines="1"
+            android:textColor="@android:color/black"
             android:textSize="12sp"
-
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/endTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/endTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/endTextView" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/horizontal_line_edittext"
+            app:layout_constraintEnd_toEndOf="@+id/startDateText"
+            app:layout_constraintStart_toStartOf="@+id/startTextView"
+            app:layout_constraintTop_toBottomOf="@+id/startDateText" />
 
         <TextView
             android:id="@+id/endTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:text="@string/end_time"
             android:textColor="@color/app_lighttext"
 
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/startTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/horizontal_line_edittext"
+
+            app:layout_constraintEnd_toEndOf="@+id/endDateText"
+            app:layout_constraintStart_toStartOf="@+id/endTextView"
+            app:layout_constraintTop_toBottomOf="@+id/endDateText" />
 
         <TextView
             android:id="@+id/noteTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:text="@string/description"
             android:textColor="@color/app_lighttext"
-
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/endTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/descriptionInput"
+            style="@style/textInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
@@ -197,8 +214,8 @@
             android:layout_marginBottom="16dp"
             android:gravity="top"
             android:hint="@string/enter_text"
+            android:imeOptions="actionDone"
             android:minHeight="120dp"
-            style="@style/textInputEditText"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -211,14 +228,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/rounded_gradient_shape"
             android:elevation="20dp"
             android:paddingHorizontal="24dp"
             android:text="@string/create"
             android:textAllCaps="false"
-
             android:textColor="@android:color/white"
+            android:textSize="@dimen/_14sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

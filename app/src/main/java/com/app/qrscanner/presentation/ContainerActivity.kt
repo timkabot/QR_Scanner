@@ -80,6 +80,12 @@ class ContainerActivity : AppCompatActivity() {
         createQrButton.setOnClickListener {
             createButtonOnClick()
         }
+
+        adsButton.setOnClickListener {
+            if (mInterstitialAd.isLoaded) {
+                mInterstitialAd.show()
+            }
+        }
     }
 
     fun createButtonOnClick(){
@@ -155,9 +161,7 @@ class ContainerActivity : AppCompatActivity() {
         }
 
         mainVM.adsEvent.observe(this, Observer {
-            println("Need to show ads")
             if (mInterstitialAd.isLoaded) {
-                println("Truing to show ads")
                 mInterstitialAd.show()
             }
         })

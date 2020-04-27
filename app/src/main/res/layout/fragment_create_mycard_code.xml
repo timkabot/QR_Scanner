@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
 
     android:layout_height="match_parent"
-    android:layout_margin="16dp">
+    android:layout_margin="12dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
@@ -63,9 +63,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:drawableRight="@drawable/contact_import_drawable"
+            android:imeOptions="actionNext"
+            android:lines="1"
             android:inputType="text"
-            android:outlineAmbientShadowColor="@color/colorPrimaryDark"
-            android:outlineSpotShadowColor="@color/colorPrimaryDark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
@@ -88,6 +88,9 @@
             android:layout_height="wrap_content"
             android:outlineAmbientShadowColor="@color/colorPrimaryDark"
             android:outlineSpotShadowColor="@color/colorPrimaryDark"
+            android:imeOptions="actionNext"
+            android:lines="1"
+            android:inputType="number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -110,6 +113,9 @@
             android:layout_height="wrap_content"
             android:outlineAmbientShadowColor="@color/colorPrimaryDark"
             android:outlineSpotShadowColor="@color/colorPrimaryDark"
+            android:imeOptions="actionNext"
+            android:lines="1"
+            android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -133,6 +139,9 @@
             android:outlineAmbientShadowColor="@color/colorPrimaryDark"
             android:outlineSpotShadowColor="@color/colorPrimaryDark"
             app:layout_constraintEnd_toEndOf="parent"
+            android:imeOptions="actionNext"
+            android:lines="1"
+            android:inputType="text"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addressTextView" />
@@ -155,20 +164,31 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/birthdateTextView"
+            android:textSize="12sp"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/birthdateTextView" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/horizontal_line_edittext"
+            app:layout_constraintEnd_toEndOf="@+id/birthdayInput"
+            app:layout_constraintStart_toStartOf="@+id/birthdateTextView"
+            app:layout_constraintTop_toBottomOf="@+id/birthdayInput" />
 
         <TextView
             android:id="@+id/orgTexView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="Организация"
             android:textColor="@color/app_lighttext"
-
+            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/birthdateTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
         <EditText
             android:id="@+id/orgInput"
@@ -177,6 +197,9 @@
             android:outlineAmbientShadowColor="@color/colorPrimaryDark"
             android:outlineSpotShadowColor="@color/colorPrimaryDark"
             app:layout_constraintEnd_toEndOf="parent"
+            android:imeOptions="actionNext"
+            android:lines="1"
+            android:inputType="text"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/orgTexView" />
@@ -200,6 +223,7 @@
             android:minHeight="120dp"
             style="@style/textInputEditText"
             android:gravity="top"
+            android:imeOptions="actionDone"
             android:hint="@string/утеук_еуче"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -210,12 +234,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/rounded_gradient_shape"
             android:elevation="20dp"
             android:paddingHorizontal="24dp"
             android:text="@string/create"
             android:textAllCaps="false"
+            android:textSize="@dimen/_14sdp"
 
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -10,5 +10,6 @@
     <color name="app_lighttext">#9f9f9f</color>
     <color name="semi_transparent">#80000000</color>
     <color name="semi_transparent_white">#D9FFFFFF</color>
-
+    <color name="semi_transparent_black">#80000000</color>
+    <color name="green_button_background">#00b46b</color>
 </resources>

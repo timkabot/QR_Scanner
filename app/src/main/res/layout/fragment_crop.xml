@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/cropLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.takusemba.cropme.CropLayout
+        android:id="@+id/cropView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cropme_background_alpha="90%"
+        app:cropme_frame_height_percent="40%"
+        app:cropme_frame_width_percent="80%"
+        app:cropme_max_scale="2.0"
+        app:cropme_overlay_shape="rectangle"
+        app:cropme_with_border="false" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/cropImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Сканировать"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_18sdp"
+        android:layout_marginBottom="@dimen/_48sdp"
+        android:paddingHorizontal="@dimen/_28sdp"
+        android:paddingVertical="@dimen/_8sdp"
+
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/gradient_background_button"
+        />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:visibility="invisible"
+        android:layout_marginEnd="-20dp"
+        android:indeterminate="true" />
+
+    <include
+        android:id="@+id/cropToolbar"
+        layout="@layout/crop_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</RelativeLayout>

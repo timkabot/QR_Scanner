@@ -28,8 +28,8 @@ class CreateCalendarCodeFragment : CreateCodeBaseFragment() {
 
     private fun checkInputs(): Boolean {
         if (titleInput.text!!.isEmpty() &&
-            locationInput.text.isEmpty() &&
-            descriptionInput.text.isEmpty()
+            locationInput.text!!.isEmpty() &&
+            descriptionInput.text!!.isEmpty()
         ) {
             getString(R.string.enter_text).showToast(context!!)
             return false

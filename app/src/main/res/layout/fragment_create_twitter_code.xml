@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="12dp"
         android:background="@color/background">
 
 
@@ -92,6 +92,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/enter_username"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
             android:outlineAmbientShadowColor="@color/colorPrimaryDark"
             android:outlineSpotShadowColor="@color/colorPrimaryDark"
             app:layout_constraintEnd_toEndOf="parent"
@@ -102,12 +104,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/rounded_gradient_shape"
             android:elevation="20dp"
             android:paddingHorizontal="24dp"
             android:text="@string/create"
             android:textAllCaps="false"
+            android:textSize="@dimen/_14sdp"
 
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"

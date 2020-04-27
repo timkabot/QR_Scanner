@@ -21,9 +21,9 @@ class CreateMailCodeFragment : CreateCodeBaseFragment(){
         }
     }
     private fun checkInputs(): Boolean {
-        if (emailInput.text.isEmpty() &&
-            subjectInput.text.isEmpty() &&
-            contentInput.text.isEmpty()
+        if (emailInput.text!!.isEmpty() &&
+            subjectInput.text!!.isEmpty() &&
+            contentInput.text!!.isEmpty()
         ) {
             getString(R.string.enter_information).showToast(context!!)
             return false

@@ -115,16 +115,14 @@ public class MyZxing extends BarcodeScannerView {
                 if (rawResult != null) {
                     Handler handler = new Handler(Looper.getMainLooper());
                     Result finalRawResult = rawResult;
-                    handler.post(new Runnable() {
-                        public void run() {
-                            MyZxing.ResultHandler tmpResultHandler = MyZxing.this.mResultHandler;
-                            MyZxing.this.mResultHandler = null;
-                            MyZxing.this.stopCameraPreview();
-                            if (tmpResultHandler != null) {
-                                tmpResultHandler.handleResult(finalRawResult);
-                            }
-
+                    handler.post(() -> {
+                        ResultHandler tmpResultHandler = MyZxing.this.mResultHandler;
+                        MyZxing.this.mResultHandler = null;
+                        MyZxing.this.stopCameraPreview();
+                        if (tmpResultHandler != null) {
+                            tmpResultHandler.handleResult(finalRawResult);
                         }
+
                     });
                 } else {
                     camera.setOneShotPreviewCallback(this);

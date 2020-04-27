@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="12dp"
         android:background="@color/background">
 
 
@@ -91,6 +91,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
             android:hint="@string/enter_instagram_profile"
             android:outlineAmbientShadowColor="@color/colorPrimaryDark"
             android:outlineSpotShadowColor="@color/colorPrimaryDark"
@@ -109,6 +111,7 @@
             android:paddingHorizontal="24dp"
             android:text="@string/create"
             android:textAllCaps="false"
+            android:textSize="@dimen/_14sdp"
 
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"

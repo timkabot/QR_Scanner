@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="12dp"
         android:background="@color/background">
 
         <ImageView
@@ -91,6 +91,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/enter_facebook_id"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
             android:outlineAmbientShadowColor="@color/colorPrimaryDark"
             android:outlineSpotShadowColor="@color/colorPrimaryDark"
             app:layout_constraintEnd_toEndOf="parent"
@@ -108,6 +110,7 @@
             android:paddingHorizontal="24dp"
             android:text="@string/create"
             android:textAllCaps="false"
+            android:textSize="@dimen/_14sdp"
 
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"

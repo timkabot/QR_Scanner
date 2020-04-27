@@ -32,15 +32,16 @@
 
         <EditText
             android:id="@+id/editText"
-            android:layout_width="wrap_content"
+            style="@style/mySmallTextView"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="15dp"
             android:background="@null"
-            style="@style/mySmallTextView"
             android:hint="@string/enter_url_or_text"
             android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/webSiteTextView"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/webSiteTextView" />
 
         <LinearLayout
@@ -72,6 +73,7 @@
                     android:paddingTop="0dp"
                     android:text="@string/paste"
                     android:textAllCaps="false"
+                    android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -95,6 +97,7 @@
                     android:elevation="20dp"
                     android:paddingHorizontal="24dp"
                     android:text="@string/create"
+                    android:textStyle="bold"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     app:layout_constraintBottom_toBottomOf="parent"

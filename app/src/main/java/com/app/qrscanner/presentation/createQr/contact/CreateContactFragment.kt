@@ -67,8 +67,8 @@ class CreateContactFragment : CreateCodeBaseFragment() {
 
     private fun checkInputs(): Boolean {
         if (nameInput.text!!.isEmpty() &&
-            phoneInput.text.isEmpty() &&
-            emailInput.text.isEmpty()
+            phoneInput.text!!.isEmpty() &&
+            emailInput.text!!.isEmpty()
         ) {
             getString(R.string.enter_information).showToast(context!!)
             return false
